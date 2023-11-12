@@ -11,6 +11,9 @@ local M = {}
 -- }
 M.dap = {
   plugin = true,
+  v = {
+    ["<leader>de"] = {"<cmd> lua require('dapui').eval() <CR>"},
+  },
   n = {
     ["<leader>db"] = {"<cmd> DapToggleBreakpoint <CR>"},
     ["<leader>du"] = {"<cmd> lua require('dapui').toggle() <CR>"},

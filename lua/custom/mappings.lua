@@ -6,10 +6,13 @@ M.general = {
     ["<esc><esc>"] = {"<C-\\><C-N>"}
   },
   n = {
+    -- terminal
     ["<leader>t'"] = {"<cmd> tabnext <CR>"},
     ["<leader>tj"] = {"<cmd> tabprevious <CR>"},
     ["<leader>tn"] = {"<cmd> tabnew <CR>"},
     ["<leader>tt"] = {"<cmd> tabnew | terminal <CR>"},
+
+    -- python
   },
   -- v = {
   --   [">"] = { ">gv", "indent"},
@@ -26,6 +29,8 @@ M.dap = {
     ["<leader>du"] = {"<cmd> lua require('dapui').toggle() <CR>"},
     ["<leader>df"] = {"<cmd> lua require('dapui').float_element('scopes') <CR>"},
     ["<leader>de"] = {"<cmd> lua require('dapui').eval() <CR>"},
+
+    ["<leader>pi"] = {"<cmd> PyrightOrganizeImports <CR>"},
 
     ["<F6>"] = {"<cmd> DapToggleBreakpoint <CR>"},
     ["<F8>"] = {"<cmd> DapStepOver <CR>"},

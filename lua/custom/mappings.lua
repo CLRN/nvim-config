@@ -1,14 +1,21 @@
 ---@type MappingsTable
 local M = {}
 
--- M.general = {
---   n = {
---     [";"] = { ":", "enter command mode", opts = { nowait = true } },
---   },
---   v = {
---     [">"] = { ">gv", "indent"},
---   },
--- }
+M.general = {
+  t = {
+    ["<esc><esc>"] = {"<C-\\><C-N>"}
+  },
+  n = {
+    ["<leader>t'"] = {"<cmd> tabnext <CR>"},
+    ["<leader>tj"] = {"<cmd> tabprevious <CR>"},
+    ["<leader>tn"] = {"<cmd> tabnew <CR>"},
+    ["<leader>tt"] = {"<cmd> tabnew | terminal <CR>"},
+  },
+  -- v = {
+  --   [">"] = { ">gv", "indent"},
+  -- },
+}
+
 M.dap = {
   plugin = true,
   v = {
@@ -19,6 +26,7 @@ M.dap = {
     ["<leader>du"] = {"<cmd> lua require('dapui').toggle() <CR>"},
     ["<leader>df"] = {"<cmd> lua require('dapui').float_element('scopes') <CR>"},
     ["<leader>de"] = {"<cmd> lua require('dapui').eval() <CR>"},
+
     ["<F6>"] = {"<cmd> DapToggleBreakpoint <CR>"},
     ["<F8>"] = {"<cmd> DapStepOver <CR>"},
     ["<F7>"] = {"<cmd> DapStepInto <CR>"},

@@ -21,7 +21,10 @@ M.general = {
     ["<leader>5"] = {"<cmd> 5tabnext <CR>"},
     ["<leader>6"] = {"<cmd> 6tabnext <CR>"},
 
+    ["<leader>y"] = {"\"+y"},
+
     -- python
+    ["<leader>tc"] = {"<cmd> Telescope commands <CR>"},
   },
   -- v = {
   --   [">"] = { ">gv", "indent"},

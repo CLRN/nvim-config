@@ -110,6 +110,44 @@ local plugins = {
     "mfussenegger/nvim-dap",
     config = function(_, opts)
       require("core.utils").load_mappings("dap")
+
+      local dap = require('dap')
+      local dapui = require("dapui")
+
+      dap.adapters.cppdbg = {
+        id = 'cppdbg',
+        type = 'executable',
+        command = '/home/skarnaukhov/bin/extension/debugAdapters/bin/OpenDebugAD7',
+      }
+
+      dap.configurations.cpp = {
+        {
+          name = "Launch file",
+          type = "cppdbg",
+          request = "launch",
+          program = function()
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+          end,
+          cwd = '${workspaceFolder}',
+          stopAtEntry = true,
+          setupCommands = {
+            {
+              text = '-enable-pretty-printing',
+              description =  'enable pretty printing',
+              ignoreFailures = false
+            },
+          },
+        }
+      }
+      dap.listeners.after.event_initialized["dapui_config"] = function()
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated["dapui_config"] = function()
+        dapui.close()
+      end
+      dap.listeners.before.event_exited["dapui_config"] = function()
+        dapui.close()
+      end
     end
   },
   {
@@ -154,8 +192,8 @@ local plugins = {
         --       ${kitGenerator}
         --       ${variant:xx}
         cmake_build_directory = "cmake-build/${variant:buildType}", -- this is used to specify generate directory for cmake, allows macro expansion
-        cmake_soft_link_compile_commands = true, -- this will automatically make a soft link from compile commands file to project root dir
-        cmake_compile_commands_from_lsp = false, -- this will automatically set compile commands file location using lsp, to use it, please set `cmake_soft_link_compile_commands` to false
+        cmake_soft_link_compile_commands = false, -- this will automatically make a soft link from compile commands file to project root dir
+        cmake_compile_commands_from_lsp = true, -- this will automatically set compile commands file location using lsp, to use it, please set `cmake_soft_link_compile_commands` to false
         cmake_kits_path = nil, -- this is used to specify global cmake kits path, see CMakeKits for detailed usage
         cmake_variants_message = {
           short = { show = true }, -- whether to show short message
@@ -163,11 +201,18 @@ local plugins = {
         },
         cmake_dap_configuration = { -- debug settings for cmake
           name = "cpp",
-          type = "codelldb",
+          type = "cppdbg",
           request = "launch",
           stopOnEntry = false,
           runInTerminal = true,
           console = "integratedTerminal",
+          setupCommands = {
+            {
+              text = '-enable-pretty-printing',
+              description =  'enable pretty printing',
+              ignoreFailures = false
+            },
+          },
         },
         cmake_executor = { -- executor to use
           name = "quickfix", -- name of the executor

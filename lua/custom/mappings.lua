@@ -3,7 +3,7 @@ local M = {}
 
 M.general = {
   t = {
-    ["<esc><esc>"] = {"<C-\\><C-N>"}
+    -- ["<esc><esc>"] = {"<C-\\><C-N>"}
   },
   n = {
     -- terminal
@@ -11,6 +11,15 @@ M.general = {
     ["<leader>tj"] = {"<cmd> tabprevious <CR>"},
     ["<leader>tn"] = {"<cmd> tabnew <CR>"},
     ["<leader>tt"] = {"<cmd> tabnew | terminal <CR>"},
+    ["<leader>tx"] = {"<cmd> tabclose <CR>"},
+
+    -- tabs
+    ["<leader>1"] = {"<cmd> 1tabnext <CR>"},
+    ["<leader>2"] = {"<cmd> 2tabnext <CR>"},
+    ["<leader>3"] = {"<cmd> 3tabnext <CR>"},
+    ["<leader>4"] = {"<cmd> 4tabnext <CR>"},
+    ["<leader>5"] = {"<cmd> 5tabnext <CR>"},
+    ["<leader>6"] = {"<cmd> 6tabnext <CR>"},
 
     -- python
   },

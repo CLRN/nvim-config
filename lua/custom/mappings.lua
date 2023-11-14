@@ -10,6 +10,12 @@ M.general = {
     ["<A-4>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:4tabnext<CR>", true, true, true), "Escape and go to tab" },
     ["<A-5>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:5tabnext<CR>", true, true, true), "Escape and go to tab" },
     ["<A-6>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:6tabnext<CR>", true, true, true), "Escape and go to tab" },
+
+    -- switch between windows
+    ["<C-j>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>h", true, true, true), "Escape and go to tab" },
+    ["<C-'>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>l", true, true, true), "Escape and go to tab" },
+    ["<C-k>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>j", true, true, true), "Escape and go to tab" },
+    ["<C-l>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>k", true, true, true), "Escape and go to tab" },
   },
 
   n = {

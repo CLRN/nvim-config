@@ -42,6 +42,7 @@ M.dap = {
     ["<leader>de"] = {"<cmd> lua require('dapui').eval() <CR>"},
 
     ["<leader>pi"] = {"<cmd> PyrightOrganizeImports <CR>"},
+    ["<leader>pp"] = {"<cmd> PyrightSetPythonPath venv/bin/python <CR>"},
 
     ["<F6>"] = {"<cmd> DapToggleBreakpoint <CR>"},
     ["<F8>"] = {"<cmd> DapStepOver <CR>"},

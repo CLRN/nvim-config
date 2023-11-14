@@ -21,10 +21,14 @@ M.general = {
     ["<leader>5"] = {"<cmd> 5tabnext <CR>"},
     ["<leader>6"] = {"<cmd> 6tabnext <CR>"},
 
-    ["<leader>y"] = {"\"+y"},
-
-    -- python
     ["<leader>tc"] = {"<cmd> Telescope commands <CR>"},
+
+    -- git
+    ["<leader>gs"] = {"<cmd> Gitsigns stage_hunk <CR>"},
+    ["<leader>gr"] = {"<cmd> Gitsigns reset_hunk <CR>"},
+    ["<leader>gn"] = {"<cmd> Gitsigns next_hunk <CR>"},
+    ["<leader>gp"] = {"<cmd> Gitsigns prev_hunk <CR>"},
+
   },
   -- v = {
   --   [">"] = { ">gv", "indent"},
@@ -60,6 +64,17 @@ M.dap_python = {
         require('dap-python').test_method()
       end
     }
+  }
+}
+
+M.cmake_tools = {
+  plugin = false,
+  n = {
+    ["<leader>cb"] = {"<cmd> CMakeBuild <CR>"}, 
+    ["<leader>cd"] = {"<cmd> CMakeDebug <CR>"}, 
+    ["<leader>cr"] = {"<cmd> CMakeRun <CR>"}, 
+    ["<leader>ctl"] = {"<cmd> CMakeSelectLaunchTarget <CR>"}, 
+    ["<leader>ctb"] = {"<cmd> CMakeSelectBuildTarget <CR>"}, 
   }
 }
 -- more keybinds!

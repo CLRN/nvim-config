@@ -27,6 +27,12 @@ M.general = {
     ["<A-4>"] = { "<cmd> 4tabnext<CR>", "Go to tab" },
     ["<A-5>"] = { "<cmd> 5tabnext<CR>", "Go to tab" },
     ["<A-6>"] = { "<cmd> 6tabnext<CR>", "Go to tab" },
+
+    -- window resize
+    ["="] = { "<cmd>vertical resize +5<cr>", "make the window biger vertically" },
+    ["-"] = { "<cmd>vertical resize -5<cr>", "make the window smaller vertically" },
+    ["+"] = { "<cmd>horizontal  resize +2<cr>", "make the window biger horizontally" },
+    ["_"] = { "<cmd>horizontal  resize -2<cr>", "make the window smaller horizontally" },
   },
   -- v = {
   --   [">"] = { ">gv", "indent"},

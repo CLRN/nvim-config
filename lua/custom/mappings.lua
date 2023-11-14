@@ -73,7 +73,7 @@ M.cmake_tools = {
     ["<leader>cb"] = {"<cmd> CMakeBuild <CR>"}, 
     ["<leader>cd"] = {"<cmd> CMakeDebug <CR>"}, 
     ["<leader>cr"] = {"<cmd> CMakeRun <CR>"}, 
-    ["<leader>ctl"] = {"<cmd> CMakeSelectLaunchTarget <CR>"}, 
+    ["<leader>ctr"] = {"<cmd> CMakeSelectLaunchTarget <CR>"}, 
     ["<leader>ctb"] = {"<cmd> CMakeSelectBuildTarget <CR>"}, 
   }
 }

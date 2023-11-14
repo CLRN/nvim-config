@@ -22,12 +22,7 @@ M.general = {
     ["<leader>6"] = {"<cmd> 6tabnext <CR>"},
 
     ["<leader>tc"] = {"<cmd> Telescope commands <CR>"},
-
-    -- git
-    ["<leader>gs"] = {"<cmd> Gitsigns stage_hunk <CR>"},
-    ["<leader>gr"] = {"<cmd> Gitsigns reset_hunk <CR>"},
-    ["<leader>gn"] = {"<cmd> Gitsigns next_hunk <CR>"},
-    ["<leader>gp"] = {"<cmd> Gitsigns prev_hunk <CR>"},
+    ["<leader>tk"] = {"<cmd> Telescope keymaps <CR>"},
 
   },
   -- v = {

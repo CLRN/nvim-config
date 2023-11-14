@@ -3,27 +3,30 @@ local M = {}
 
 M.general = {
   t = {
-    -- ["<esc><esc>"] = {"<C-\\><C-N>"}
+    ["<C-x>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true), "Escape terminal mode" },
+    ["<A-1>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:1tabnext<CR>", true, true, true), "Escape and go to tab" },
+    ["<A-2>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:2tabnext<CR>", true, true, true), "Escape and go to tab" },
+    ["<A-3>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:3tabnext<CR>", true, true, true), "Escape and go to tab" },
+    ["<A-4>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:4tabnext<CR>", true, true, true), "Escape and go to tab" },
+    ["<A-5>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:5tabnext<CR>", true, true, true), "Escape and go to tab" },
+    ["<A-6>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:6tabnext<CR>", true, true, true), "Escape and go to tab" },
   },
+
   n = {
     -- terminal
-    ["<leader>t'"] = {"<cmd> tabnext <CR>"},
-    ["<leader>tj"] = {"<cmd> tabprevious <CR>"},
     ["<leader>tn"] = {"<cmd> tabnew <CR>"},
     ["<leader>tt"] = {"<cmd> tabnew | terminal <CR>"},
     ["<leader>tx"] = {"<cmd> tabclose <CR>"},
 
-    -- tabs
-    ["<leader>1"] = {"<cmd> 1tabnext <CR>"},
-    ["<leader>2"] = {"<cmd> 2tabnext <CR>"},
-    ["<leader>3"] = {"<cmd> 3tabnext <CR>"},
-    ["<leader>4"] = {"<cmd> 4tabnext <CR>"},
-    ["<leader>5"] = {"<cmd> 5tabnext <CR>"},
-    ["<leader>6"] = {"<cmd> 6tabnext <CR>"},
-
     ["<leader>tc"] = {"<cmd> Telescope commands <CR>"},
     ["<leader>tk"] = {"<cmd> Telescope keymaps <CR>"},
 
+    ["<A-1>"] = { "<cmd> 1tabnext<CR>", "Go to tab" },
+    ["<A-2>"] = { "<cmd> 2tabnext<CR>", "Go to tab" },
+    ["<A-3>"] = { "<cmd> 3tabnext<CR>", "Go to tab" },
+    ["<A-4>"] = { "<cmd> 4tabnext<CR>", "Go to tab" },
+    ["<A-5>"] = { "<cmd> 5tabnext<CR>", "Go to tab" },
+    ["<A-6>"] = { "<cmd> 6tabnext<CR>", "Go to tab" },
   },
   -- v = {
   --   [">"] = { ">gv", "indent"},

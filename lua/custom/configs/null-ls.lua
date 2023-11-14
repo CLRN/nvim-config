@@ -14,24 +14,23 @@ local opts = {
     null_ls.builtins.formatting.black.with({
       extra_args = { "--line-length=120" }
     }),
-    null_ls.builtins.formatting.isort,
+    null_ls.builtins.formatting.isort.with({
+      extra_args = { "--line-length=120" }
+    }),
   },
   on_attach = function(client, bufnr)
-    print("attaching")
     if client.supports_method("textDocument/formatting") then
-      print("supports")
       vim.api.nvim_clear_autocmds({
         group = augroup,
         buffer = bufnr,
       })
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        group = augroup,
-        buffer = bufnr,
-        callback = function()
-          print("formattings")
-          vim.lsp.buf.format({ bufnr = bufnr })
-        end,
-      })
+      -- vim.api.nvim_create_autocmd("BufWritePre", {
+      --   group = augroup,
+      --   buffer = bufnr,
+      --   callback = function()
+      --     vim.lsp.buf.format({ bufnr = bufnr })
+      --   end,
+      -- })
     end
   end,
 }

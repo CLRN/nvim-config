@@ -77,7 +77,7 @@ M.general = {
 M.dap = {
   plugin = true,
   v = {
-    ["<leader>de"] = {"<cmd> lua require().eval() <CR>"},
+    ["<leader>de"] = {"<cmd> lua require('dapui).eval() <CR>"},
   },
   n = {
     ["<leader>db"] = {"<cmd> DapToggleBreakpoint <CR>"},

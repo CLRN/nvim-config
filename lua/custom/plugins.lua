@@ -253,6 +253,28 @@ local plugins = {
       }
     end
   },
+  {
+    lazy = false,
+    "kdheepak/lazygit.nvim",
+    dependencies =  {
+      "nvim-telescope/telescope.nvim",
+      "nvim-lua/plenary.nvim"
+    },
+    config = function()
+      require("telescope").load_extension("lazygit")
+    end,
+  },
+  {
+    lazy = false,
+    "ThePrimeagen/harpoon",
+    dependencies =  {
+      "nvim-telescope/telescope.nvim",
+      "nvim-lua/plenary.nvim"
+    },
+    config = function()
+      require("telescope").load_extension("harpoon")
+    end,
+  },
   -- {
   --   lazy = false,
   --   'tanvirtin/vgit.nvim',

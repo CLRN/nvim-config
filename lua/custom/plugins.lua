@@ -275,6 +275,10 @@ local plugins = {
       require("telescope").load_extension("harpoon")
     end,
   },
+  {
+    lazy = false,
+    "justinmk/vim-sneak"
+  }
   -- {
   --   lazy = false,
   --   'tanvirtin/vgit.nvim',

@@ -56,30 +56,34 @@ local plugins = {
           layouts = { {
             elements = { {
               id = "scopes",
-              size = 0.25
+              size = 0.85
             }, {
                 id = "breakpoints",
-                size = 0.25
+                size = 0.05
               }, {
                 id = "stacks",
-                size = 0.25
+                size = 0.05
               }, {
                 id = "watches",
-                size = 0.25
+                size = 0.05
               } },
             position = "left",
-            size = 50
+            size = 70
           }, {
               elements = { {
                 id = "repl",
-                size = 0.1
-              }, {
+                size = 1,
+              } },
+              position = "bottom",
+              size = 10
+            }, {
+              elements = { {
                   id = "console",
-                  size = 0.9
+                  size = 1,
                 } },
               position = "bottom",
               size = 10
-            } },
+            }},
           mappings = {
             edit = "e",
             expand = { "<CR>", "<2-LeftMouse>" },

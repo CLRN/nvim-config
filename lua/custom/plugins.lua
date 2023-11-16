@@ -112,7 +112,7 @@ local plugins = {
       dap.adapters.cppdbg = {
         id = 'cppdbg',
         type = 'executable',
-        command = '/home/skarnaukhov/bin/extension/debugAdapters/bin/OpenDebugAD7',
+        command = 'OpenDebugAD7',
       }
 
       dap.configurations.cpp = {

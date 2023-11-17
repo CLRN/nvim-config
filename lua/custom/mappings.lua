@@ -39,8 +39,9 @@ M.general = {
     ["<leader>tt"] = {"<cmd> tabnew | terminal <CR>"},
     ["<leader>tx"] = {"<cmd> tabclose <CR>"},
 
-    ["<leader>tc"] = {"<cmd> Telescope commands <CR>"},
-    ["<leader>tk"] = {"<cmd> Telescope keymaps <CR>"},
+    ["<leader>sc"] = {"<cmd> Telescope commands <CR>"},
+    ["<leader>sk"] = {"<cmd> Telescope keymaps <CR>"},
+    ["<leader>sh"] = {"<cmd> Telescope command_history <CR>"},
 
     ["<A-1>"] = { "<cmd> 1tabnext<CR>", "Go to tab" },
     ["<A-2>"] = { "<cmd> 2tabnext<CR>", "Go to tab" },
@@ -71,6 +72,10 @@ M.general = {
 
     -- git
     ["<leader>gl"] = {"<cmd> LazyGit <CR>"},
+
+    -- misc
+    ["<leader>pf"] = {"<cmd> lua print(vim.fn.expand('%')) <CR>"},
+    -- 
   },
   -- v = {
   --   [">"] = { ">gv", "indent"},

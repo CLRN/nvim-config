@@ -56,7 +56,7 @@ local plugins = {
           layouts = { {
             elements = { {
               id = "scopes",
-              size = 0.85
+              size = 0.70
             }, {
                 id = "breakpoints",
                 size = 0.05
@@ -66,23 +66,19 @@ local plugins = {
               }, {
                 id = "watches",
                 size = 0.05
+              }, {
+                id = "repl",
+                size = 0.15
               } },
             position = "left",
-            size = 70
+            size = 50
           }, {
-              elements = { {
-                id = "repl",
-                size = 1,
-              } },
-              position = "bottom",
-              size = 10
-            }, {
               elements = { {
                   id = "console",
                   size = 1,
                 } },
               position = "bottom",
-              size = 10
+              size = 20
             }},
           mappings = {
             edit = "e",

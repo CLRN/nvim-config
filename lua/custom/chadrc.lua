@@ -10,6 +10,14 @@ M.ui = {
 
   hl_override = highlights.override,
   hl_add = highlights.add,
+
+  changed_themes = {
+    ayu_dark = {
+      base_16 = {
+        base00 = "#000005",
+      }
+    },
+  },
 }
 
 M.plugins = "custom.plugins"

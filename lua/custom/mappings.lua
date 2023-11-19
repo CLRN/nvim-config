@@ -134,8 +134,8 @@ vim.g['sneak#label_esc'] = "<c-c>"
 
 vim.g['sneak#s_next'] = "<c-c>"
 
-vim.keymap.set('n', 's', '<Plug>Sneak_s', {remap = true})
-vim.keymap.set('n', 'S', '<Plug>Sneak_S', {remap = true})
+vim.keymap.set({'n', 'v'}, 's', '<Plug>Sneak_s', {remap = true})
+vim.keymap.set({'n', 'v'}, 'S', '<Plug>Sneak_S', {remap = true})
 vim.keymap.set('', 'f', '<Plug>Sneak_f', {remap = true})
 vim.keymap.set('', 'F', '<Plug>Sneak_F', {remap = true})
 vim.keymap.set('', 't', '<Plug>Sneak_t', {remap = true})

@@ -12,7 +12,7 @@ M.ui = {
   hl_add = highlights.add,
 
   changed_themes = {
-    ayu_dark = {
+    all = {
       base_16 = {
         base00 = "#000005",
       }

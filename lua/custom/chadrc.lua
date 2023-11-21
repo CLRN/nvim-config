@@ -5,14 +5,14 @@ local M = {}
 local highlights = require "custom.highlights"
 
 M.ui = {
-  theme = "ayu_dark",
-  theme_toggle = { "ayu_dark", "one_light" },
+  theme = "catppuccin",
+  theme_toggle = { "catppuccin", "one_light" },
 
   hl_override = highlights.override,
   hl_add = highlights.add,
 
   changed_themes = {
-    all = {
+    ayu_dark = {
       base_16 = {
         base00 = "#000005",
       }

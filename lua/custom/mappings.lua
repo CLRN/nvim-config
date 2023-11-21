@@ -99,7 +99,13 @@ M.dap = {
     ["<F6>"] = {"<cmd> DapToggleBreakpoint <CR>"},
     ["<F8>"] = {"<cmd> DapStepOver <CR>"},
     ["<F7>"] = {"<cmd> DapStepInto <CR>"},
-    ["<F9>"] = {"<cmd> DapContinue <CR>"},
+    ["<F9>"] = {function()
+      -- (Re-)reads launch.json if present
+      if vim.fn.filereadable(".vscode/launch.json") then
+        require("dap.ext.vscode").load_launchjs(nil, { cpptools = { "c", "cpp" } })
+      end
+      require("dap").continue()
+    end},
     ["<F4>"] = {"<cmd> DapTerminate <CR>"},
   }
 }

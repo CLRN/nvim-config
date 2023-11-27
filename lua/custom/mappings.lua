@@ -90,8 +90,11 @@ M.dap = {
   n = {
     ["<leader>db"] = {"<cmd> DapToggleBreakpoint <CR>"},
     ["<leader>du"] = {"<cmd> lua require('dapui').toggle() <CR>"},
-    ["<leader>df"] = {"<cmd> lua require('dapui').float_element('scopes') <CR>"},
+    ["<leader>dr"] = {"<cmd> lua require('dapui').float_element('repl') <CR>"},
     ["<leader>de"] = {"<cmd> lua require('dapui').eval() <CR>"},
+    ["<leader>dk"] = {"<cmd> lua require('dap').down() <CR>"},
+    ["<leader>dl"] = {"<cmd> lua require('dap').up() <CR>"},
+    ["<leader>df"] = {"<cmd> lua require('dap').focus_frame() <CR>"},
 
     ["<leader>pi"] = {"<cmd> PyrightOrganizeImports <CR>"},
     ["<leader>pp"] = {"<cmd> PyrightSetPythonPath venv/bin/python <CR>"},

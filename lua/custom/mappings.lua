@@ -77,15 +77,16 @@ M.general = {
     ["<leader>pf"] = {"<cmd> lua print(vim.fn.expand('%')) <CR>"},
     -- 
   },
-  -- v = {
-  --   [">"] = { ">gv", "indent"},
-  -- },
+  v = {
+    ["<leader>cc"] = {"<cmd> lua require('osc52').copy_visual() <CR>"},
+    -- [">"] = { ">gv", "indent"},
+  },
 }
 
 M.dap = {
   plugin = true,
   v = {
-    ["<leader>de"] = {"<cmd> lua require('dapui).eval() <CR>"},
+    ["<leader>de"] = {"<cmd> lua require('dapui').eval() <CR>"},
   },
   n = {
     ["<leader>db"] = {"<cmd> DapToggleBreakpoint <CR>"},

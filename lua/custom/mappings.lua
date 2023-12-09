@@ -78,7 +78,7 @@ M.general = {
     -- 
   },
   v = {
-    ["<leader>c"] = {"<cmd> lua require('osc52').copy_visual() <CR>"},
+    ["<leader>cc"] = {"<cmd> lua require('osc52').copy_visual() <CR>"},
     -- [">"] = { ">gv", "indent"},
   },
 }

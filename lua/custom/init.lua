@@ -6,3 +6,6 @@
 --   command = "tabdo wincmd =",
 -- })
 require("custom.configs.firenvim")
+
+vim.opt.spelllang = 'en_us'
+vim.opt.spell = true

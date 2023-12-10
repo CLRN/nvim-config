@@ -74,9 +74,9 @@ local plugins = {
             size = 50
           }, {
               elements = { {
-                  id = "console",
-                  size = 1,
-                } },
+                id = "console",
+                size = 1,
+              } },
               position = "bottom",
               size = 20
             }},
@@ -342,7 +342,18 @@ local plugins = {
         tmux_passthrough = false, -- Use tmux passthrough (requires tmux: set -g allow-passthrough on)
       }
     end,
+  },
+  {
+    'glacambre/firenvim',
+
+    -- Lazy load firenvim
+    -- Explanation: https://github.com/folke/lazy.nvim/discussions/463#discussioncomment-4819297
+    lazy = not vim.g.started_by_firenvim,
+    build = function()
+      vim.fn["firenvim#install"](0)
+    end
   }
+
   -- {
   --   lazy = false,
   --   'tanvirtin/vgit.nvim',

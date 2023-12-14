@@ -162,7 +162,7 @@ function go_to_file_col()
   local file, line = current_line:match("(/[^:]+):([0-9]+)")
 
   if not file then
-    file, line = current_line:match("File \"(/[^:]+)\", line ([0-9]+)")
+    file, line = current_line:match("File \"(.+)\", line ([0-9]+)")
   end
 
   if file and line then
@@ -184,6 +184,6 @@ function go_to_file_col()
   end
 end
 
-vim.keymap.set({'n', 'v'}, 'gf', go_to_file_col, {remap = true})
+vim.keymap.set({'n', 't'}, 'gf', go_to_file_col, {remap = true})
 
 return M

@@ -161,6 +161,10 @@ function go_to_file_col()
   local current_line = vim.api.nvim_get_current_line()
   local file, line = current_line:match("(/[^:]+):([0-9]+)")
 
+  if not file then
+    file, line = current_line:match("File \"(/[^:]+)\", line ([0-9]+)")
+  end
+
   if file and line then
 
     local current_window = vim.api.nvim_win_get_number(vim.api.nvim_get_current_win())

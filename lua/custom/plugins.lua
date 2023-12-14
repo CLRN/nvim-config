@@ -222,14 +222,14 @@ local plugins = {
         cmake_generate_options = { 
           "-DCMAKE_EXPORT_COMPILE_COMMANDS=1", 
           "-DCMAKE_VERBOSE_MAKEFILE=OFF",
-          "-DCMAKE_TOOLCHAIN_FILE=/bb/feeds/feeds20-support/feeds20-dev-distros/series/stable/refroot/amd64/opt/bb/share/plink/BBToolchain64.cmake",
+          "-DCMAKE_TOOLCHAIN_FILE=" .. os.getenv("DISTRIBUTION_REFROOT") .. "/opt/bb/share/plink/BBToolchain64.cmake",
           "-DCMAKE_INSTALL_LIBDIR=.",
           "-DCMAKE_BUILD_TYPE=Debug",
           "-DCMAKE_CXX_STANDARD=17",
           "-DBUILDID=dev",
           "-DCMAKE_OUTPUT_DIR=.",
         }, -- this will be passed when invoke `CMakeGenerate`
-        cmake_build_options = {}, -- this will be passed when invoke `CMakeBuild`
+        cmake_build_options = {"-j", "16"}, -- this will be passed when invoke `CMakeBuild`
         -- support macro expansion:
         --       ${kit}
         --       ${kitGenerator}
@@ -258,7 +258,7 @@ local plugins = {
           },
         },
         cmake_executor = { -- executor to use
-          name = "quickfix", -- name of the executor
+          name = "terminal", -- name of the executor
           opts = {}, -- the options the executor will get, possible values depend on the executor type. See `default_opts` for possible values.
           default_opts = { -- a list of default and possible values for executors
             quickfix = {
@@ -352,7 +352,19 @@ local plugins = {
     build = function()
       vim.fn["firenvim#install"](0)
     end
-  }
+  },
+  -- {
+  --   "m00qek/baleia.nvim",
+  --   config = function()
+  --     local baleia = require("baleia").setup {}
+  --
+  --     vim.api.nvim_create_user_command("BaleiaColorize", function()
+  --       vim.opt_local.modifiable = true
+  --       baleia.once(vim.api.nvim_get_current_buf())
+  --       vim.opt_local.modifiable = false
+  --     end, { force = true })
+  --   end,
+  -- }
 
   -- {
   --   lazy = false,

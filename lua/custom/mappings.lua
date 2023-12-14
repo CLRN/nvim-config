@@ -156,4 +156,30 @@ vim.keymap.set('', 'F', '<Plug>Sneak_F', {remap = true})
 vim.keymap.set('', 't', '<Plug>Sneak_t', {remap = true})
 vim.keymap.set('', 'T', '<Plug>Sneak_T', {remap = true})
 
+function go_to_file_col()
+  -- grab current line and match it against the regexp
+  local current_line = vim.api.nvim_get_current_line()
+  local file, line = current_line:match("(/[^:]+):([0-9]+)")
+
+  if file and line then
+
+    local current_window = vim.api.nvim_win_get_number(vim.api.nvim_get_current_win())
+    local windows = vim.api.nvim_tabpage_list_wins(0)
+
+    for i, v in ipairs(windows) do
+      -- jump to previous window
+      if vim.api.nvim_win_get_number(v) == current_window and i > 1 then
+        vim.api.nvim_set_current_win(windows[i - 1])
+        break
+      end
+    end
+
+    -- open the file
+    vim.cmd(string.format(":edit %s", file))
+    vim.cmd(string.format(":%d", line))
+  end
+end
+
+vim.keymap.set({'n', 'v'}, 'gf', go_to_file_col, {remap = true})
+
 return M

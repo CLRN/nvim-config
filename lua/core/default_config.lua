@@ -35,7 +35,21 @@ M.ui = {
     -- default/round/block/arrow separators work only for default statusline theme
     -- round and block will work for minimal theme only
     separator_style = "default",
-    overriden_modules = nil,
+    overriden_modules = function(modules)
+      table.insert(
+        modules,
+        7,
+        (function()
+          local cmake = require("cmake-tools")
+          if cmake.is_cmake_project() then
+            local build = "🔨[" .. cmake.get_build_target() .. "] "
+            local launch = "🚀[" .. cmake.get_launch_target() .. "] "
+            return "%#St_LspStatus# " .. build .. launch
+          end
+          return ""
+        end)()
+      )
+    end,
   },
 
   -- lazyload it when there are 1+ buffers

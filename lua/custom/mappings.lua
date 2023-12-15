@@ -132,8 +132,16 @@ M.cmake_tools = {
     ["<leader>cd"] = {"<cmd> CMakeDebug <CR>"},
     ["<leader>cr"] = {"<cmd> CMakeRun <CR>"},
     ["<leader>cs"] = {"<cmd> CMakeStop <CR>"},
-    ["<leader>ctr"] = {"<cmd> CMakeSelectLaunchTarget <CR>"},
-    ["<leader>ctb"] = {"<cmd> CMakeSelectBuildTarget <CR>"},
+    ["<leader>ctb"] = {function ()
+      require("cmake-tools").select_build_target(function ()
+        vim.cmd("redrawstatus")
+      end)
+    end, "Select build target"},
+    ["<leader>ctr"] = {function ()
+      require("cmake-tools").select_launch_target(function ()
+        vim.cmd("redrawstatus")
+      end)
+    end, "Select launch target"},
   }
 }
 -- more keybinds!

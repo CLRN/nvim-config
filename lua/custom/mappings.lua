@@ -128,11 +128,12 @@ M.dap_python = {
 M.cmake_tools = {
   plugin = false,
   n = {
-    ["<leader>cb"] = {"<cmd> CMakeBuild <CR>"}, 
-    ["<leader>cd"] = {"<cmd> CMakeDebug <CR>"}, 
-    ["<leader>cr"] = {"<cmd> CMakeRun <CR>"}, 
-    ["<leader>ctr"] = {"<cmd> CMakeSelectLaunchTarget <CR>"}, 
-    ["<leader>ctb"] = {"<cmd> CMakeSelectBuildTarget <CR>"}, 
+    ["<leader>cb"] = {"<cmd> CMakeBuild <CR>"},
+    ["<leader>cd"] = {"<cmd> CMakeDebug <CR>"},
+    ["<leader>cr"] = {"<cmd> CMakeRun <CR>"},
+    ["<leader>cs"] = {"<cmd> CMakeStop <CR>"},
+    ["<leader>ctr"] = {"<cmd> CMakeSelectLaunchTarget <CR>"},
+    ["<leader>ctb"] = {"<cmd> CMakeSelectBuildTarget <CR>"},
   }
 }
 -- more keybinds!

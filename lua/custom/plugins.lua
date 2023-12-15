@@ -344,7 +344,7 @@ local plugins = {
     end,
   },
   {
-    'glacambre/firenvim',
+    "glacambre/firenvim",
 
     -- Lazy load firenvim
     -- Explanation: https://github.com/folke/lazy.nvim/discussions/463#discussioncomment-4819297
@@ -353,6 +353,17 @@ local plugins = {
       vim.fn["firenvim#install"](0)
     end
   },
+  {
+    "junegunn/fzf",
+    ft = {"cmake", "cpp", "python", "lua"},
+    build = function()
+      vim.fn["fzf#install"]()
+    end
+  },
+  {
+    "kevinhwang91/nvim-bqf",
+    ft = {"cmake", "cpp", "python", "lua"},
+  }
   -- {
   --   "m00qek/baleia.nvim",
   --   config = function()

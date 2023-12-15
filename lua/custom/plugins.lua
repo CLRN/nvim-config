@@ -212,7 +212,6 @@ local plugins = {
   },
   {
     "Civitasv/cmake-tools.nvim",
-    lazy = true,
     ft = {"cmake", "cpp"},
     config = function(_, opts)
       require("cmake-tools").setup {

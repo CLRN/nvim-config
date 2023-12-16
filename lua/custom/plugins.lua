@@ -219,9 +219,9 @@ local plugins = {
         cmake_regenerate_on_save = true, -- auto generate when save CMakeLists.txt
         --
         cmake_generate_options = { 
-          "-DCMAKE_EXPORT_COMPILE_COMMANDS=1", 
+          "-DCMAKE_EXPORT_COMPILE_COMMANDS=1",
           "-DCMAKE_VERBOSE_MAKEFILE=OFF",
-          "-DCMAKE_TOOLCHAIN_FILE=" .. os.getenv("DISTRIBUTION_REFROOT") .. "/opt/bb/share/plink/BBToolchain64.cmake",
+          "-DCMAKE_TOOLCHAIN_FILE=" .. (os.getenv("DISTRIBUTION_REFROOT") or "") .. "/opt/bb/share/plink/BBToolchain64.cmake",
           "-DCMAKE_INSTALL_LIBDIR=.",
           "-DCMAKE_BUILD_TYPE=Debug",
           "-DCMAKE_CXX_STANDARD=17",

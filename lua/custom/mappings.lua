@@ -112,11 +112,14 @@ M.dap = {
     ["<leader>pi"] = {"<cmd> PyrightOrganizeImports <CR>"},
     ["<leader>pp"] = {"<cmd> PyrightSetPythonPath venv/bin/python <CR>"},
 
-    ["<F6>"] = {"<cmd> DapToggleBreakpoint <CR>"},
+    ["<F5>"] = {function ()
+      require("dap").step_out()
+    end},
     ["<F8>"] = {"<cmd> DapStepOver <CR>"},
     ["<F7>"] = {"<cmd> DapStepInto <CR>"},
     ["<F9>"] = {function()
       -- (Re-)reads launch.json if present
+      vim.cmd("wa")
       if vim.fn.filereadable(".vscode/launch.json") then
         require("dap.ext.vscode").load_launchjs(nil, { cpptools = { "c", "cpp" } })
       end

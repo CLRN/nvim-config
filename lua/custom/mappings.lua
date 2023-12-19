@@ -1,6 +1,17 @@
 ---@type MappingsTable
 local M = {}
 
+function CleanTerminal()
+  vim.opt_local.scrollback = 1
+
+  vim.api.nvim_command("startinsert")
+  vim.api.nvim_feedkeys("reset", 't', false)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<cr>', true, false, true), 't', true)
+
+  vim.opt_local.scrollback = 10000
+end
+
+
 M.general = {
   t = {
     ["<C-x>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true), "Escape terminal mode" },
@@ -35,6 +46,7 @@ M.general = {
 
   n = {
     -- terminal
+    ["<leader>tr"] = { CleanTerminal, "Clean terminal" },
     ["<leader>tn"] = {"<cmd> tabnew <CR>"},
     ["<leader>tt"] = {"<cmd> tabnew | terminal <CR>"},
     ["<leader>tx"] = {"<cmd> tabclose <CR>"},
@@ -196,16 +208,5 @@ end
 vim.keymap.set({'n', 't'}, 'gf', go_to_file_col, {remap = true})
 
 
-function clean_terminal()
-  vim.opt_local.scrollback = 1
-
-  vim.api.nvim_command("startinsert")
-  vim.api.nvim_feedkeys("reset", 't', false)
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<cr>', true, false, true), 't', true)
-
-  vim.opt_local.scrollback = 10000
-end
-
-vim.keymap.set('n', '<leader>rt', clean_terminal, {desc = "Reset terminal"})
 
 return M

@@ -14,7 +14,7 @@ local original = vim.fn.setqflist
 vim.fn.setqflist = function (list, action, what)
     local transformed_lines = {}
 
-    for _, line in ipairs(what.lines or {}) do
+    for _, line in ipairs((what or {}).lines or {}) do
        local stripped_line = line:gsub("\x1b[[0-9][:;0-9]*[mK]", '')
        table.insert(transformed_lines, stripped_line)
     end

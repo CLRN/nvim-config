@@ -359,10 +359,10 @@ local plugins = {
       vim.fn["fzf#install"]()
     end
   },
-  {
-    "kevinhwang91/nvim-bqf",
-    ft = {"cmake", "cpp", "python", "lua"},
-  }
+  -- {
+  --   "kevinhwang91/nvim-bqf",
+  --   ft = {"cmake", "cpp", "python", "lua"},
+  -- }
   -- {
   --   "m00qek/baleia.nvim",
   --   config = function()

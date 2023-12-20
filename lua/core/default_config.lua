@@ -42,8 +42,8 @@ M.ui = {
         (function()
           local cmake = require("cmake-tools")
           if cmake.is_cmake_project() then
-            local build = "🔨[" .. cmake.get_build_target() .. "] "
-            local launch = "🚀[" .. cmake.get_launch_target() .. "] "
+            local build = "⚒[" .. (cmake.get_build_target() or "") .. "] "
+            local launch = "▶[" .. (cmake.get_launch_target() or "") .. "] "
             return "%#St_LspStatus# " .. build .. launch
           end
           return ""

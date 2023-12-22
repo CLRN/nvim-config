@@ -7,12 +7,6 @@ M.general = {
     -- go to  beginning and end
     ["<C-b>"] = { "<ESC>^i", "Beginning of line" },
     ["<C-e>"] = { "<End>", "End of line" },
-
-    -- navigate within insert mode
-    ["<C-j>"] = { "<Left>", "Move left" },
-    ["<C-'>"] = { "<Right>", "Move right" },
-    ["<C-k>"] = { "<Down>", "Move down" },
-    ["<C-l>"] = { "<Up>", "Move up" },
   },
 
   n = {
@@ -25,9 +19,6 @@ M.general = {
 
     -- save
     ["<C-s>"] = { "<cmd> w <CR>", "Save file" },
-
-    -- Copy all
-    ["<C-c>"] = { "<cmd> %y+ <CR>", "Copy whole file" },
 
     -- line numbers
     ["<leader>n"] = { "<cmd> set nu! <CR>", "Toggle line number" },

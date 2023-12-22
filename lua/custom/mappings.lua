@@ -181,7 +181,9 @@ vim.keymap.set('', 'F', '<Plug>Sneak_F', {remap = true})
 vim.keymap.set('', 't', '<Plug>Sneak_t', {remap = true})
 vim.keymap.set('', 'T', '<Plug>Sneak_T', {remap = true})
 
-function go_to_file_col()
+vim.keymap.set('v', '$', 'g_', {remap = true})
+
+function GoToFileCol()
   -- grab current line and match it against the regexp
   local current_line = vim.api.nvim_get_current_line()
   local file, line = current_line:match("(/[^:]+):([0-9]+)")
@@ -209,7 +211,7 @@ function go_to_file_col()
   end
 end
 
-vim.keymap.set({'n', 't'}, 'gf', go_to_file_col, {remap = true})
+vim.keymap.set({'n', 't'}, 'gf', GoToFileCol, {remap = true})
 
 
 

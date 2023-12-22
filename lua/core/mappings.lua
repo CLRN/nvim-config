@@ -146,14 +146,14 @@ M.lspconfig = {
       "LSP definition",
     },
 
-    ["K"] = {
+    ["<leader>lh"] = {
       function()
         vim.lsp.buf.hover()
       end,
       "LSP hover",
     },
 
-    ["gi"] = {
+    ["<leader>li"] = {
       function()
         vim.lsp.buf.implementation()
       end,
@@ -167,21 +167,21 @@ M.lspconfig = {
       "LSP signature help",
     },
 
-    ["<leader>D"] = {
+    ["<leader>ld"] = {
       function()
         vim.lsp.buf.type_definition()
       end,
       "LSP definition type",
     },
 
-    ["<leader>ra"] = {
+    ["<leader>lr"] = {
       function()
         require("nvchad.renamer").open()
       end,
       "LSP rename",
     },
 
-    ["<leader>ca"] = {
+    ["<leader>la"] = {
       function()
         vim.lsp.buf.code_action()
       end,
@@ -216,7 +216,7 @@ M.lspconfig = {
       "Goto next",
     },
 
-    ["<leader>q"] = {
+    ["<leader>lq"] = {
       function()
         vim.diagnostic.setloclist()
       end,
@@ -246,7 +246,7 @@ M.lspconfig = {
   },
 
   v = {
-    ["<leader>ca"] = {
+    ["<leader>la"] = {
       function()
         vim.lsp.buf.code_action()
       end,
@@ -281,7 +281,7 @@ M.telescope = {
     ["<leader>fz"] = { "<cmd> Telescope current_buffer_fuzzy_find <CR>", "Find in current buffer" },
 
     -- git
-    ["<leader>cm"] = { "<cmd> Telescope git_commits <CR>", "Git commits" },
+    ["<leader>gm"] = { "<cmd> Telescope git_commits <CR>", "Git commits" },
     ["<leader>gt"] = { "<cmd> Telescope git_status <CR>", "Git status" },
 
     -- pick a hidden term
@@ -291,73 +291,6 @@ M.telescope = {
     ["<leader>th"] = { "<cmd> Telescope themes <CR>", "Nvchad themes" },
 
     ["<leader>ma"] = { "<cmd> Telescope marks <CR>", "telescope bookmarks" },
-  },
-}
-
-M.nvterm = {
-  plugin = true,
-
-  t = {
-    -- toggle in terminal mode
-    -- ["<A-i>"] = {
-    --   function()
-    --     require("nvterm.terminal").toggle "float"
-    --   end,
-    --   "Toggle floating term",
-    -- },
-    --
-    -- ["<A-h>"] = {
-    --   function()
-    --     require("nvterm.terminal").toggle "horizontal"
-    --   end,
-    --   "Toggle horizontal term",
-    -- },
-    --
-    -- ["<A-v>"] = {
-    --   function()
-    --     require("nvterm.terminal").toggle "vertical"
-    --   end,
-    --   "Toggle vertical term",
-    -- },
-  },
-
-  n = {
-    -- toggle in normal mode
-    -- ["<A-i>"] = {
-    --   function()
-    --     require("nvterm.terminal").toggle "float"
-    --   end,
-    --   "Toggle floating term",
-    -- },
-    --
-    -- ["<A-h>"] = {
-    --   function()
-    --     require("nvterm.terminal").toggle "horizontal"
-    --   end,
-    --   "Toggle horizontal term",
-    -- },
-    --
-    -- ["<A-v>"] = {
-    --   function()
-    --     require("nvterm.terminal").toggle "vertical"
-    --   end,
-    --   "Toggle vertical term",
-    -- },
-
-    -- new
-    ["<leader>h"] = {
-      function()
-        require("nvterm.terminal").new "horizontal"
-      end,
-      "New horizontal term",
-    },
-
-    ["<leader>v"] = {
-      function()
-        require("nvterm.terminal").new "vertical"
-      end,
-      "New vertical term",
-    },
   },
 }
 

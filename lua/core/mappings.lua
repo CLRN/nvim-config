@@ -255,6 +255,16 @@ M.lspconfig = {
   },
 }
 
+M.nvterm = {
+  plugin = true,
+
+  t = {
+  },
+
+  n = {
+  },
+}
+
 M.nvimtree = {
   plugin = true,
 

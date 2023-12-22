@@ -28,7 +28,7 @@ lspconfig.html.setup {
 lspconfig.clangd.setup {
   on_attach = on_attach,
   capabilities = capabilities,
-  cmd = {"clangd-17"},
+  cmd = {"clangd-17", "--offset-encoding=utf-16"},
   on_new_config = function(new_config, new_cwd)
     local status, cmake = pcall(require, "cmake-tools")
     if status then

@@ -367,6 +367,22 @@ local plugins = {
       vim.notify = require("notify")
     end
 
+  },
+  {
+    ft = { "javascript", "typescript", "javascriptreact", "typescriptreact", "json", "yaml", "lua" },
+    "FotiadisM/tabset.nvim",
+    config = function()
+      require("tabset").setup({
+        languages = {
+          {
+            filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact", "json", "yaml", "lua" },
+            config = {
+              tabwidth = 2
+            }
+          }
+        }
+      })
+    end
   }
   -- {
   --   "kevinhwang91/nvim-bqf",

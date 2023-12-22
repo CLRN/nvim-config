@@ -359,6 +359,15 @@ local plugins = {
       vim.fn["fzf#install"]()
     end
   },
+  {
+    lazy = false,
+    "rcarriga/nvim-notify",
+    config = function()
+      require("telescope").load_extension("notify")
+      vim.notify = require("notify")
+    end
+
+  }
   -- {
   --   "kevinhwang91/nvim-bqf",
   --   ft = {"cmake", "cpp", "python", "lua"},

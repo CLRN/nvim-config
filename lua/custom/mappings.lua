@@ -54,6 +54,7 @@ M.general = {
     ["<leader>sc"] = {"<cmd> Telescope commands <CR>"},
     ["<leader>sk"] = {"<cmd> Telescope keymaps <CR>"},
     ["<leader>sh"] = {"<cmd> Telescope command_history <CR>"},
+    ["<leader>sn"] = {"<cmd> Telescope notify <CR>"},
 
     ["<A-1>"] = { "<cmd> 1tabnext<CR>", "Go to tab" },
     ["<A-2>"] = { "<cmd> 2tabnext<CR>", "Go to tab" },

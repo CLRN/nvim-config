@@ -4,13 +4,12 @@ local M = {}
 function CleanTerminal()
   vim.opt_local.scrollback = 1
 
-  vim.api.nvim_command("startinsert")
-  vim.api.nvim_feedkeys("reset", 't', false)
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<cr>', true, false, true), 't', true)
+  vim.api.nvim_command "startinsert"
+  vim.api.nvim_feedkeys("reset", "t", false)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<cr>", true, false, true), "t", true)
 
   vim.opt_local.scrollback = 10000
 end
-
 
 M.general = {
   t = {
@@ -31,30 +30,62 @@ M.general = {
     ["<C-l>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>k", true, true, true), "Escape and go to window" },
 
     -- harpoon
-    ["<A-y>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:lua require('harpoon.ui').toggle_quick_menu() <cr>", true, true, true), "Escape and go to harpoon" },
+    ["<A-y>"] = {
+      vim.api.nvim_replace_termcodes(
+        "<C-\\><C-N>:lua require('harpoon.ui').toggle_quick_menu() <cr>",
+        true,
+        true,
+        true
+      ),
+      "Escape and go to harpoon",
+    },
 
-    ["<A-j>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:lua require('harpoon.ui').nav_file(1) <cr>", true, true, true), "Escape and go to harpoon" },
-    ["<A-k>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:lua require('harpoon.ui').nav_file(2) <cr>", true, true, true), "Escape and go to harpoon" },
-    ["<A-l>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:lua require('harpoon.ui').nav_file(3) <cr>", true, true, true), "Escape and go to harpoon" },
-    ["<A-'>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:lua require('harpoon.ui').nav_file(4) <cr>", true, true, true), "Escape and go to harpoon" },
+    ["<A-j>"] = {
+      vim.api.nvim_replace_termcodes("<C-\\><C-N>:lua require('harpoon.ui').nav_file(1) <cr>", true, true, true),
+      "Escape and go to harpoon",
+    },
+    ["<A-k>"] = {
+      vim.api.nvim_replace_termcodes("<C-\\><C-N>:lua require('harpoon.ui').nav_file(2) <cr>", true, true, true),
+      "Escape and go to harpoon",
+    },
+    ["<A-l>"] = {
+      vim.api.nvim_replace_termcodes("<C-\\><C-N>:lua require('harpoon.ui').nav_file(3) <cr>", true, true, true),
+      "Escape and go to harpoon",
+    },
+    ["<A-'>"] = {
+      vim.api.nvim_replace_termcodes("<C-\\><C-N>:lua require('harpoon.ui').nav_file(4) <cr>", true, true, true),
+      "Escape and go to harpoon",
+    },
 
-    ["<A-u>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:lua require('harpoon.term').gotoTerminal(1) <cr>", true, true, true), "Escape and go to harpoon term" },
-    ["<A-i>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:lua require('harpoon.term').gotoTerminal(2) <cr>", true, true, true), "Escape and go to harpoon term" },
-    ["<A-o>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:lua require('harpoon.term').gotoTerminal(3) <cr>", true, true, true), "Escape and go to harpoon term" },
-    ["<A-p>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:lua require('harpoon.term').gotoTerminal(4) <cr>", true, true, true), "Escape and go to harpoon term" },
+    ["<A-u>"] = {
+      vim.api.nvim_replace_termcodes("<C-\\><C-N>:lua require('harpoon.term').gotoTerminal(1) <cr>", true, true, true),
+      "Escape and go to harpoon term",
+    },
+    ["<A-i>"] = {
+      vim.api.nvim_replace_termcodes("<C-\\><C-N>:lua require('harpoon.term').gotoTerminal(2) <cr>", true, true, true),
+      "Escape and go to harpoon term",
+    },
+    ["<A-o>"] = {
+      vim.api.nvim_replace_termcodes("<C-\\><C-N>:lua require('harpoon.term').gotoTerminal(3) <cr>", true, true, true),
+      "Escape and go to harpoon term",
+    },
+    ["<A-p>"] = {
+      vim.api.nvim_replace_termcodes("<C-\\><C-N>:lua require('harpoon.term').gotoTerminal(4) <cr>", true, true, true),
+      "Escape and go to harpoon term",
+    },
   },
 
   n = {
     -- terminal
     ["<leader>tr"] = { CleanTerminal, "Clean terminal" },
-    ["<leader>tn"] = {"<cmd> tabnew <CR>"},
-    ["<leader>tt"] = {"<cmd> tabnew | terminal <CR>"},
-    ["<leader>tx"] = {"<cmd> tabclose <CR>"},
+    ["<leader>tn"] = { "<cmd> tabnew <CR>" },
+    ["<leader>tt"] = { "<cmd> tabnew | terminal <CR>" },
+    ["<leader>tx"] = { "<cmd> tabclose <CR>" },
 
-    ["<leader>sc"] = {"<cmd> Telescope commands <CR>"},
-    ["<leader>sk"] = {"<cmd> Telescope keymaps <CR>"},
-    ["<leader>sh"] = {"<cmd> Telescope command_history <CR>"},
-    ["<leader>sn"] = {"<cmd> Telescope notify <CR>"},
+    ["<leader>sc"] = { "<cmd> Telescope commands <CR>" },
+    ["<leader>sk"] = { "<cmd> Telescope keymaps <CR>" },
+    ["<leader>sh"] = { "<cmd> Telescope command_history <CR>" },
+    ["<leader>sn"] = { "<cmd> Telescope notify <CR>" },
 
     ["<A-1>"] = { "<cmd> 1tabnext<CR>", "Go to tab" },
     ["<A-2>"] = { "<cmd> 2tabnext<CR>", "Go to tab" },
@@ -84,14 +115,14 @@ M.general = {
     ["<A-p>"] = { "<cmd> lua require('harpoon.term').gotoTerminal(4) <cr>" },
 
     -- git
-    ["<leader>gl"] = {"<cmd> LazyGit <CR>"},
+    ["<leader>gl"] = { "<cmd> LazyGit <CR>" },
 
     -- misc
-    ["<leader>pf"] = {"<cmd> lua print(vim.fn.expand('%')) <CR>"},
-    -- 
+    ["<leader>pf"] = { "<cmd> lua print(vim.fn.expand('%')) <CR>" },
+    --
   },
   v = {
-    ["<leader>cc"] = {"<cmd> lua require('osc52').copy_visual() <CR>"},
+    ["<leader>cc"] = { "<cmd> lua require('osc52').copy_visual() <CR>" },
     -- [">"] = { ">gv", "indent"},
   },
 }
@@ -99,35 +130,39 @@ M.general = {
 M.dap = {
   plugin = true,
   v = {
-    ["<leader>de"] = {"<cmd> lua require('dapui').eval() <CR>"},
+    ["<leader>de"] = { "<cmd> lua require('dapui').eval() <CR>" },
   },
   n = {
-    ["<leader>db"] = {"<cmd> DapToggleBreakpoint <CR>"},
-    ["<leader>du"] = {"<cmd> lua require('dapui').toggle() <CR>"},
-    ["<leader>dr"] = {"<cmd> lua require('dapui').float_element('repl') <CR>"},
-    ["<leader>de"] = {"<cmd> lua require('dapui').eval() <CR>"},
-    ["<leader>dk"] = {"<cmd> lua require('dap').down() <CR>"},
-    ["<leader>dl"] = {"<cmd> lua require('dap').up() <CR>"},
-    ["<leader>df"] = {"<cmd> lua require('dap').focus_frame() <CR>"},
+    ["<leader>db"] = { "<cmd> DapToggleBreakpoint <CR>" },
+    ["<leader>du"] = { "<cmd> lua require('dapui').toggle() <CR>" },
+    ["<leader>dr"] = { "<cmd> lua require('dapui').float_element('repl') <CR>" },
+    ["<leader>de"] = { "<cmd> lua require('dapui').eval() <CR>" },
+    ["<leader>dk"] = { "<cmd> lua require('dap').down() <CR>" },
+    ["<leader>dl"] = { "<cmd> lua require('dap').up() <CR>" },
+    ["<leader>df"] = { "<cmd> lua require('dap').focus_frame() <CR>" },
 
-    ["<leader>pi"] = {"<cmd> PyrightOrganizeImports <CR>"},
-    ["<leader>pp"] = {"<cmd> PyrightSetPythonPath venv/bin/python <CR>"},
+    ["<leader>pi"] = { "<cmd> PyrightOrganizeImports <CR>" },
+    ["<leader>pp"] = { "<cmd> PyrightSetPythonPath venv/bin/python <CR>" },
 
-    ["<F5>"] = {function ()
-      require("dap").step_out()
-    end},
-    ["<F8>"] = {"<cmd> DapStepOver <CR>"},
-    ["<F7>"] = {"<cmd> DapStepInto <CR>"},
-    ["<F9>"] = {function()
-      -- (Re-)reads launch.json if present
-      vim.cmd("wa")
-      if vim.fn.filereadable(".vscode/launch.json") then
-        require("dap.ext.vscode").load_launchjs(nil, { cpptools = { "c", "cpp" } })
-      end
-      require("dap").continue()
-    end},
-    ["<F4>"] = {"<cmd> DapTerminate <CR>"},
-  }
+    ["<F5>"] = {
+      function()
+        require("dap").step_out()
+      end,
+    },
+    ["<F8>"] = { "<cmd> DapStepOver <CR>" },
+    ["<F7>"] = { "<cmd> DapStepInto <CR>" },
+    ["<F9>"] = {
+      function()
+        -- (Re-)reads launch.json if present
+        vim.cmd "wa"
+        if vim.fn.filereadable ".vscode/launch.json" then
+          require("dap.ext.vscode").load_launchjs(nil, { cpptools = { "c", "cpp" } })
+        end
+        require("dap").continue()
+      end,
+    },
+    ["<F4>"] = { "<cmd> DapTerminate <CR>" },
+  },
 }
 
 M.dap_python = {
@@ -135,65 +170,70 @@ M.dap_python = {
   n = {
     ["<leader>dpr"] = {
       function()
-        require('dap-python').test_method()
-      end
-    }
-  }
+        require("dap-python").test_method()
+      end,
+    },
+  },
 }
 
 M.cmake_tools = {
   plugin = false,
   n = {
-    ["<leader>cb"] = {"<cmd> CMakeBuild <CR>"},
-    ["<leader>cd"] = {"<cmd> CMakeDebug <CR>"},
-    ["<leader>cr"] = {"<cmd> CMakeRun <CR>"},
-    ["<leader>cs"] = {"<cmd> CMakeStop <CR>"},
-    ["<leader>ctb"] = {function ()
-      require("cmake-tools").select_build_target(function ()
-        vim.cmd("redrawstatus")
-      end)
-    end, "Select build target"},
-    ["<leader>ctr"] = {function ()
-      require("cmake-tools").select_launch_target(function ()
-        vim.cmd("redrawstatus")
-      end)
-    end, "Select launch target"},
-  }
+    ["<leader>cb"] = { "<cmd> CMakeBuild <CR>" },
+    ["<leader>cd"] = { "<cmd> CMakeDebug <CR>" },
+    ["<leader>cr"] = { "<cmd> CMakeRun <CR>" },
+    ["<leader>cs"] = { "<cmd> CMakeStop <CR>" },
+    ["<leader>ctb"] = {
+      function()
+        require("cmake-tools").select_build_target(function()
+          vim.cmd "redrawstatus"
+        end)
+      end,
+      "Select build target",
+    },
+    ["<leader>ctr"] = {
+      function()
+        require("cmake-tools").select_launch_target(function()
+          vim.cmd "redrawstatus"
+        end)
+      end,
+      "Select launch target",
+    },
+  },
 }
 -- more keybinds!
 -- move to next match immediately, tab through stuff
-vim.g['sneak#label'] = 1
+vim.g["sneak#label"] = 1
 
 -- always go the same way.
-vim.g['sneak#absolute_dir'] = 1
+vim.g["sneak#absolute_dir"] = 1
 
 -- case dependent on ignorecase+smartcase
-vim.g['sneak#use_ic_scs'] = 1
+vim.g["sneak#use_ic_scs"] = 1
 
-vim.g['sneak#label_esc'] = "<c-c>"
+vim.g["sneak#label_esc"] = "<c-c>"
 
-vim.g['sneak#s_next'] = "<c-c>"
+vim.g["sneak#s_next"] = "<c-c>"
 
-vim.keymap.set({'n', 'v'}, 's', '<Plug>Sneak_s', {remap = true})
-vim.keymap.set({'n', 'v'}, 'S', '<Plug>Sneak_S', {remap = true})
-vim.keymap.set('', 'f', '<Plug>Sneak_f', {remap = true})
-vim.keymap.set('', 'F', '<Plug>Sneak_F', {remap = true})
-vim.keymap.set('', 't', '<Plug>Sneak_t', {remap = true})
-vim.keymap.set('', 'T', '<Plug>Sneak_T', {remap = true})
+vim.keymap.set({ "n", "v" }, "s", "<Plug>Sneak_s", { remap = true })
+vim.keymap.set({ "n", "v" }, "S", "<Plug>Sneak_S", { remap = true })
+vim.keymap.set("", "f", "<Plug>Sneak_f", { remap = true })
+vim.keymap.set("", "F", "<Plug>Sneak_F", { remap = true })
+vim.keymap.set("", "t", "<Plug>Sneak_t", { remap = true })
+vim.keymap.set("", "T", "<Plug>Sneak_T", { remap = true })
 
-vim.keymap.set('v', '$', 'g_', {remap = true})
+vim.keymap.set("v", "$", "g_", { remap = true })
 
 function GoToFileCol()
   -- grab current line and match it against the regexp
   local current_line = vim.api.nvim_get_current_line()
-  local file, line = current_line:match("(/[^:]+):([0-9]+)")
+  local file, line = current_line:match "(/[^:]+):([0-9]+)"
 
   if not file then
-    file, line = current_line:match("File \"(.+)\", line ([0-9]+)")
+    file, line = current_line:match 'File "(.+)", line ([0-9]+)'
   end
 
   if file and line then
-
     local current_window = vim.api.nvim_win_get_number(vim.api.nvim_get_current_win())
     local windows = vim.api.nvim_tabpage_list_wins(0)
 
@@ -211,8 +251,6 @@ function GoToFileCol()
   end
 end
 
-vim.keymap.set({'n', 't'}, 'gf', GoToFileCol, {remap = true})
-
-
+vim.keymap.set({ "n", "t" }, "gf", GoToFileCol, { remap = true })
 
 return M

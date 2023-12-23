@@ -249,11 +249,9 @@ M.lspconfig = {
 M.nvterm = {
   plugin = true,
 
-  t = {
-  },
+  t = {},
 
-  n = {
-  },
+  n = {},
 }
 
 M.nvimtree = {

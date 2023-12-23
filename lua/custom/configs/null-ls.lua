@@ -13,19 +13,19 @@ local opts = {
     null_ls.builtins.formatting.djhtml.with { filetypes = { "html", "htmldjango" } },
 
     -- python
-    null_ls.builtins.formatting.black.with({
-      extra_args = { "--line-length=120" }
-    }),
-    null_ls.builtins.formatting.isort.with({
-      extra_args = { "--line-length=120" }
-    }),
+    null_ls.builtins.formatting.black.with {
+      extra_args = { "--line-length=120" },
+    },
+    null_ls.builtins.formatting.isort.with {
+      extra_args = { "--line-length=120" },
+    },
   },
   on_attach = function(client, bufnr)
-    if client.supports_method("textDocument/formatting") then
-      vim.api.nvim_clear_autocmds({
+    if client.supports_method "textDocument/formatting" then
+      vim.api.nvim_clear_autocmds {
         group = augroup,
         buffer = bufnr,
-      })
+      }
       -- vim.api.nvim_create_autocmd("BufWritePre", {
       --   group = augroup,
       --   buffer = bufnr,
@@ -40,7 +40,7 @@ local opts = {
 local bde_formatter = {
   method = { null_ls.methods.FORMATTING, null_ls.methods.RANGE_FORMATTING },
   filetypes = { "cpp" },
-  generator = null_ls.formatter({
+  generator = null_ls.formatter {
     command = "bde-format-15",
     to_stdin = true,
     args = require("null-ls.helpers").range_formatting_args_factory(
@@ -48,8 +48,8 @@ local bde_formatter = {
       "--offset",
       "--length",
       { use_length = true, row_offset = -1, col_offset = -1 }
-    )
-  }),
+    ),
+  },
 }
 null_ls.register(bde_formatter)
 

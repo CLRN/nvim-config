@@ -44,6 +44,9 @@ M.mason = {
     "mypy",
     "ruff",
     "pyright",
+
+    -- shell
+    "beautysh"
   },
 }
 

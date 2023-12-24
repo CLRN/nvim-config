@@ -392,6 +392,13 @@ local plugins = {
       }
     end,
   },
+  {
+    "nvim-lua/plenary.nvim",
+    lazy = false,
+    config = function()
+      require "custom.teddy"
+    end,
+  },
   -- {
   --   "kevinhwang91/nvim-bqf",
   --   ft = {"cmake", "cpp", "python", "lua"},

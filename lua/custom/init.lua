@@ -26,3 +26,8 @@ vim.fn.setqflist = function(list, action, what)
 
   original(list, action, { lines = transformed_lines })
 end
+
+vim.api.nvim_create_autocmd({ "BufRead", "BufNew" }, {
+  pattern = "*.ipynb",
+  command = "setfiletype jupyter",
+})

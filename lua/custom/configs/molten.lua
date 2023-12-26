@@ -14,6 +14,20 @@ vim.g.molten_virt_lines_off_by_1 = true
 vim.g.molten_virt_text_max_lines = 16
 vim.g.molten_wrap_output = true
 
+local deps = {
+  "cairosvg",
+  "ipykernel",
+  "jupyter_client",
+  "kaleido",
+  "nbformat",
+  "plotly",
+  "pnglatex",
+  "pynvim",
+  "pyperclip",
+  "jupyter",
+  "ipywidgets",
+}
+
 ---Shows a notification from molten
 ---@param msg string Content of the notification to show to the user.
 ---@param level integer|nil One of the values from |vim.log.levels|.
@@ -24,6 +38,41 @@ local function notify(msg, level, opts)
     vim.notify("[Molten] " .. msg, level, opts)
   end)
 end
+
+local num_checked = 0
+local not_installed = {}
+vim.schedule(function()
+  for _, pkg in ipairs(deps) do
+    vim.system(
+      { "pip", "show", pkg },
+      {},
+      vim.schedule_wrap(function(obj)
+        if obj.code ~= 0 then
+          table.insert(not_installed, pkg)
+          notify(string.format("python dependency %s not found", pkg), vim.log.levels.WARN)
+        end
+        num_checked = num_checked + 1
+        if num_checked == #deps and not vim.tbl_isempty(not_installed) then
+          if not vim.env.VIRTUAL_ENV then
+            notify("start nvim in a venv to auto-install python dependencies", vim.log.levels.WARN)
+            return
+          end
+          notify "auto-install python dependencies..."
+          vim.system({ "pip", "install", unpack(not_installed) }, {}, function(_obj)
+            if _obj.code == 0 then
+              notify "all python dependencies satisfied"
+              return
+            end
+            notify(
+              string.format("dependency installation failed with code %d: %s", _obj.code, _obj.stderr),
+              vim.log.levels.WARN
+            )
+          end)
+        end
+      end)
+    )
+  end
+end)
 
 ---Send code cell to molten
 ---@param cell code_cell_t
@@ -333,16 +382,9 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   callback = set_default_hlgroups,
 })
 
-notify "activating"
-vim.g.loaded_remote_plugins = "/tmp/molten.nvim"
-local enable_providers = {
-  "python3_provider",
-}
-
-for _, plugin in pairs(enable_providers) do
-  vim.g["loaded_" .. plugin] = nil
-  vim.cmd("runtime " .. plugin)
+if vim.fn.filereadable "/tmp/molten.nvim" then
+  vim.g.loaded_remote_plugins = "/tmp/molten.nvim"
+  vim.g["loaded_python3_provider"] = nil
+  vim.cmd "runtime python3_provider"
+  vim.cmd(string.format("source %s", "/tmp/molten.nvim"))
 end
-vim.fn["remote#host#UpdateRemotePlugins"]()
-vim.cmd(string.format("source %s", "/tmp/molten.nvim"))
-

@@ -458,14 +458,18 @@ local plugins = {
 
   {
     "benlubas/molten-nvim",
-    -- ft = { "jupyter", "python" },
-    event = "BufEnter *.ipynb",
+    lazy = false,
     dependencies = {
       "jmbuhr/otter.nvim",
       "goerz/jupytext.vim",
     },
     build = function()
-      require "custom.configs.molten-build"
+      vim.notify("activating via " .. vim.env.VIRTUAL_ENV)
+      vim.g.loaded_remote_plugins = "/tmp/molten.nvim"
+      vim.g["loaded_python3_provider"] = nil
+      vim.cmd "runtime python3_provider"
+      vim.fn["remote#host#UpdateRemotePlugins"]()
+      vim.cmd(string.format("source %s", "/tmp/molten.nvim"))
     end,
     config = function()
       require "custom.configs.molten"
@@ -474,10 +478,8 @@ local plugins = {
 
   {
     "goerz/jupytext.vim",
-    -- ft = "jupyter",
-    event = "BufEnter *.ipynb",
     build = "jupytext --version",
-    init = function()
+    config = function()
       vim.g.jupytext_command = "jupytext --opt notebook_metadata_filter=-all"
       vim.api.nvim_create_autocmd("BufReadCmd", {
         desc = "Lazy load jupytext.vim.",
@@ -485,6 +487,7 @@ local plugins = {
         pattern = "*.ipynb",
         group = vim.api.nvim_create_augroup("JupyTextLoad", {}),
         callback = function(info)
+          vim.notify("Loading " .. info.match)
           vim.opt.rtp:prepend(vim.fs.joinpath(vim.g.package_path, "jupytext.vim"))
           vim.schedule(function()
             vim.cmd.runtime { "plugin/jupytext.vim", bang = true }

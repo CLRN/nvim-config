@@ -8,6 +8,8 @@ local deps = {
   "pnglatex",
   "pynvim",
   "pyperclip",
+  "jupyter",
+  "ipywidgets",
 }
 
 ---Shows a notification from molten
@@ -21,8 +23,6 @@ local function notify(msg, level, opts)
   end)
 end
 
-local function activate()
-end
 
 local num_checked = 0
 local not_installed = {}

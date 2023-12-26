@@ -458,7 +458,7 @@ local plugins = {
 
   {
     "benlubas/molten-nvim",
-    ft = { "jupyter", "python" },
+    -- ft = { "jupyter", "python" },
     event = "BufEnter *.ipynb",
     dependencies = {
       "jmbuhr/otter.nvim",
@@ -474,7 +474,7 @@ local plugins = {
 
   {
     "goerz/jupytext.vim",
-    ft = "jupyter",
+    -- ft = "jupyter",
     event = "BufEnter *.ipynb",
     build = "jupytext --version",
     init = function()

@@ -34,7 +34,7 @@ end
 --     -- rathen than naive matching
 --   },
 -- }
-vim.api.nvim_create_autocmd({ "BufRead", "BufNew" }, {
-  pattern = "*.ipynb",
-  command = "setfiletype jupyter",
-})
+-- vim.api.nvim_create_autocmd({ "BufRead", "BufNew" }, {
+--   pattern = "*.ipynb",
+--   command = "setfiletype jupyter",
+-- })

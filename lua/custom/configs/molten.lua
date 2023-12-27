@@ -382,9 +382,3 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   callback = set_default_hlgroups,
 })
 
-if vim.fn.filereadable "/tmp/molten.nvim" then
-  vim.g.loaded_remote_plugins = "/tmp/molten.nvim"
-  vim.g["loaded_python3_provider"] = nil
-  vim.cmd "runtime python3_provider"
-  vim.cmd(string.format("source %s", "/tmp/molten.nvim"))
-end

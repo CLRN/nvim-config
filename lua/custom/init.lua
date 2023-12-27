@@ -38,3 +38,17 @@ end
 --   pattern = "*.ipynb",
 --   command = "setfiletype jupyter",
 -- })
+vim.g.python3_host_prog = "/usr/local/bin/python3"
+vim.g.loaded_remote_plugins = vim.fn.expand "$HOME/.local/share/nvim/rplugin.vim"
+local enable_providers = {
+  "python3_provider",
+}
+
+for _, plugin in pairs(enable_providers) do
+  vim.g["loaded_" .. plugin] = nil
+  vim.cmd("runtime " .. plugin)
+end
+
+if vim.loop.fs_stat(vim.g.loaded_remote_plugins) then
+  vim.cmd(string.format("source %s", vim.g.loaded_remote_plugins))
+end

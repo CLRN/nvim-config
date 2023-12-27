@@ -464,12 +464,8 @@ local plugins = {
       "goerz/jupytext.vim",
     },
     build = function()
-      vim.notify("activating via " .. vim.env.VIRTUAL_ENV)
-      vim.g.loaded_remote_plugins = "/tmp/molten.nvim"
-      vim.g["loaded_python3_provider"] = nil
-      vim.cmd "runtime python3_provider"
       vim.fn["remote#host#UpdateRemotePlugins"]()
-      vim.cmd(string.format("source %s", "/tmp/molten.nvim"))
+      vim.cmd(string.format("source %s", vim.g.loaded_remote_plugins))
     end,
     config = function()
       require "custom.configs.molten"

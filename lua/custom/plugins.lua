@@ -439,7 +439,20 @@ local plugins = {
     event = "BufEnter *.ipynb",
     config = function()
       local nn = require "notebook-navigator"
-      nn.setup { activate_hydra_keys = "<leader>h", repl_provider = "molten" }
+      nn.setup {
+        activate_hydra_keys = "<leader>h",
+        repl_provider = "molten",
+        show_hydra_hint = false,
+        hydra_keys = {
+          comment = "c",
+          run = "<CR>",
+          run_and_move = "<C-CR>",
+          move_up = "l",
+          move_down = "k",
+          add_cell_before = "a",
+          add_cell_after = "b",
+        },
+      }
     end,
     branch = "molten",
     dependencies = {

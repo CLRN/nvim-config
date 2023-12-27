@@ -86,16 +86,9 @@ local function setup_buf_keymaps_and_commands(buf)
   end
 
   local nn = require "notebook-navigator"
-  vim.keymap.set("n", "}", function()
-    nn.move_cell "d"
-  end, { buffer = buf, remap = true })
-  vim.keymap.set("n", "{", function()
-    nn.move_cell "u"
-  end, { buffer = buf, remap = true })
-  vim.keymap.set("n", "<CR>", nn.run_cell, { buffer = buf, remap = true })
-  vim.keymap.set("n", "<C-CR>", nn.run_and_move, { buffer = buf, remap = true })
   vim.keymap.set("n", "<C-c>", vim.cmd.MoltenInterrupt, { buffer = buf })
   vim.keymap.set("n", "<leader>mi", vim.cmd.MoltenInit, { buffer = buf, desc = "Init Molten" })
+  vim.keymap.set("n", "<leader>mr", vim.cmd.MoltenRestart, { buffer = buf, desc = "Restart Molten" })
   vim.keymap.set("n", "<C-k>", function()
     vim.cmd.MoltenEnterOutput { mods = { noautocmd = true } }
     if vim.bo.ft == "molten_output" then

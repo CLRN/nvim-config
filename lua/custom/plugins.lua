@@ -399,36 +399,10 @@ local plugins = {
       require "custom.teddy"
     end,
   },
-  {
-    "lervag/vimtex",
-    ft = { "tex", "markdown", "mkd" },
-    config = function()
-      require "custom.configs.vimtex"
-    end,
-  },
-
-  {
-    "iamcco/markdown-preview.nvim",
-    enabled = vim.g.modern_ui or false,
-    ft = "markdown",
-    build = "cd app && npm install && cd - && git restore .",
-    config = function()
-      require "custom.configs.markdown-preview"
-    end,
-  },
-
-  {
-    "dhruvasagar/vim-table-mode",
-    cmd = "TableModToggle",
-    ft = "markdown",
-    config = function()
-      require "custom.configs.vim-table-mode"
-    end,
-  },
 
   {
     "3rd/image.nvim",
-    enabled = vim.g.modern_ui or false,
+    enabled = false,
     event = {
       "FileType markdown,norg",
       "BufRead *.png,*.jpg,*.gif,*.webp,*.ipynb",
@@ -444,25 +418,7 @@ local plugins = {
   },
 
   {
-    "jmbuhr/otter.nvim",
-    ft = { "markdown" },
-    dependencies = {
-      "hrsh7th/nvim-cmp",
-      "neovim/nvim-lspconfig",
-      "nvim-treesitter/nvim-treesitter",
-    },
-    config = function()
-      require "custom.configs.otter"
-    end,
-  },
-
-  {
     "benlubas/molten-nvim",
-    lazy = false,
-    dependencies = {
-      "jmbuhr/otter.nvim",
-      "goerz/jupytext.vim",
-    },
     build = function()
       vim.fn["remote#host#UpdateRemotePlugins"]()
       vim.cmd(string.format("source %s", vim.g.loaded_remote_plugins))
@@ -473,108 +429,27 @@ local plugins = {
   },
 
   {
-    "goerz/jupytext.vim",
-    build = "jupytext --version",
-    config = function()
-      vim.g.jupytext_command = "jupytext --opt notebook_metadata_filter=-all"
-      vim.api.nvim_create_autocmd("BufReadCmd", {
-        desc = "Lazy load jupytext.vim.",
-        once = true,
-        pattern = "*.ipynb",
-        group = vim.api.nvim_create_augroup("JupyTextLoad", {}),
-        callback = function(info)
-          vim.notify("Loading " .. info.match)
-          vim.opt.rtp:prepend(vim.fs.joinpath(vim.g.package_path, "jupytext.vim"))
-          vim.schedule(function()
-            vim.cmd.runtime { "plugin/jupytext.vim", bang = true }
-            vim.cmd.edit(info.match)
-          end)
-          return true
-        end,
-      })
-    end,
+    "GCBallesteros/jupytext.nvim",
+    config = true,
+    lazy = false,
   },
 
   {
-    "lukas-reineke/headlines.nvim",
-    ft = { "markdown", "norg", "org", "qml" },
-    dependencies = "nvim-treesitter/nvim-treesitter",
+    "TillerBurr/NotebookNavigator.nvim",
+    event = "BufEnter *.ipynb",
     config = function()
-      require "custom.configs.headlines"
+      local nn = require "notebook-navigator"
+      nn.setup { activate_hydra_keys = "<leader>h", repl_provider = "molten" }
     end,
+    branch = "molten",
+    dependencies = {
+      "echasnovski/mini.comment",
+      "benlubas/molten-nvim",
+      "anuvyklack/hydra.nvim",
+      -- "3rd/image.nvim"
+    },
   },
-  -- {
-  --   "meatballs/notebook.nvim",
-  --   ft = { "jupyter" },
-  --   dependencies = {
-  --     "CLRN/magma-nvim",
-  --     branch = "fix-import",
-  --     config = function()
-  --       if vim.fn.executable "./venv/bin/python" == 1 then
-  --         vim.g.python3_host_prog = "./venv/bin/python3"
-  --         vim.g.loaded_remote_plugins = "/tmp/plugins.nvim"
-  --
-  --         local enable_providers = {
-  --           "python3_provider",
-  --         }
-  --
-  --         for _, plugin in pairs(enable_providers) do
-  --           vim.g["loaded_" .. plugin] = nil
-  --           vim.cmd("runtime " .. plugin)
-  --         end
-  --
-  --         vim.fn["remote#host#UpdateRemotePlugins"]()
-  --         vim.cmd(string.format("source %s", "/tmp/plugins.nvim"))
-  --       end
-  --     end,
-  --   },
-  --   config = function()
-  --     require("notebook").setup {
-  --       -- Whether to insert a blank line at the top of the notebook
-  --       insert_blank_line = true,
-  --
-  --       -- Whether to display the index number of a cell
-  --       show_index = true,
-  --
-  --       -- Whether to display the type of a cell
-  --       show_cell_type = true,
-  --
-  --       -- Style for the virtual text at the top of a cell
-  --       virtual_text_style = { fg = "lightblue", italic = true },
-  --     }
-  --     local api = require "notebook.api"
-  --     local settings = require "notebook.settings"
-  --
-  --     function _G.define_cell(extmark)
-  --       if extmark == nil then
-  --         local line = vim.fn.line "."
-  --         extmark, _ = api.current_extmark(line)
-  --       end
-  --       local start_line = extmark[1] + 1
-  --       local end_line = extmark[3].end_row
-  --       pcall(function()
-  --         vim.fn.MagmaDefineCell(start_line, end_line)
-  --       end)
-  --     end
-  --
-  --     function _G.define_all_cells()
-  --       local buffer = vim.api.nvim_get_current_buf()
-  --       local extmarks = settings.extmarks[buffer]
-  --       for id, cell in pairs(extmarks) do
-  --         local extmark = vim.api.nvim_buf_get_extmark_by_id(0, settings.plugin_namespace, id, { details = true })
-  --         if cell.cell_type == "code" then
-  --           define_cell(extmark)
-  --         end
-  --       end
-  --     end
-  --
-  --     vim.api.nvim_create_autocmd({ "BufRead" }, { pattern = { "*.ipynb" }, command = "MagmaInit" })
-  --     vim.api.nvim_create_autocmd(
-  --       "User",
-  --       { pattern = { "MagmaInitPost", "NBPostRender" }, callback = _G.define_all_cells }
-  --     )
-  --   end,
-  -- },
+
   -- {
   --   "kevinhwang91/nvim-bqf",
   --   ft = {"cmake", "cpp", "python", "lua"},

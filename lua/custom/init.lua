@@ -38,7 +38,11 @@ end
 --   pattern = "*.ipynb",
 --   command = "setfiletype jupyter",
 -- })
-vim.g.python3_host_prog = "/usr/local/bin/python3"
+if not vim.env.VIRTUAL_ENV then
+  vim.g.python3_host_prog = "/usr/local/bin/python3"
+else
+  vim.g.python3_host_prog = vim.env.VIRTUAL_ENV .. "/bin/python3"
+end
 vim.g.loaded_remote_plugins = vim.fn.expand "$HOME/.local/share/nvim/rplugin.vim"
 local enable_providers = {
   "python3_provider",

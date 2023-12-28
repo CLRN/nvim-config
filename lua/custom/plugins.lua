@@ -160,17 +160,7 @@ local plugins = {
       "rcarriga/nvim-dap-ui",
     },
     config = function(_, opts)
-      -- local path = "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python"
-
-      local cwd = vim.fn.getcwd()
-      local path = ""
-      if vim.fn.executable(cwd .. "/venv/bin/python") == 1 then
-        path = cwd .. "/venv/bin/python"
-      elseif vim.fn.executable(cwd .. "/.venv/bin/python") == 1 then
-        path = cwd .. "/.venv/bin/python"
-      else
-        path = "python3"
-      end
+      local path = "~/.local/share/nvim/mason/packages/debugpy/venv/bin/python"
 
       require("dap-python").setup(path)
       require("core.utils").load_mappings "dap_python"

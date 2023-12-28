@@ -142,7 +142,7 @@ M.dap = {
     ["<leader>df"] = { "<cmd> lua require('dap').focus_frame() <CR>" },
 
     ["<leader>pi"] = { "<cmd> PyrightOrganizeImports <CR>" },
-    ["<leader>pp"] = { "<cmd> PyrightSetPythonPath venv/bin/python <CR>" },
+    ["<leader>pp"] = { "<cmd> PyrightSetPythonPath " .. (vim.env.VIRTUAL_ENV or "") .. " <CR>" },
 
     ["<F5>"] = {
       function()

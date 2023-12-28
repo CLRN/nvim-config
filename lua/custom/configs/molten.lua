@@ -85,7 +85,6 @@ local function setup_buf_keymaps_and_commands(buf)
     return
   end
 
-  local nn = require "notebook-navigator"
   vim.keymap.set("n", "<C-c>", vim.cmd.MoltenInterrupt, { buffer = buf })
   vim.keymap.set("n", "<leader>mi", vim.cmd.MoltenInit, { buffer = buf, desc = "Init Molten" })
   vim.keymap.set("n", "<leader>mr", vim.cmd.MoltenRestart, { buffer = buf, desc = "Restart Molten" })

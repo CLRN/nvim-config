@@ -373,7 +373,16 @@ local plugins = {
       require("tabset").setup {
         languages = {
           {
-            filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact", "json", "yaml", "lua", "cmake" },
+            filetypes = {
+              "javascript",
+              "typescript",
+              "javascriptreact",
+              "typescriptreact",
+              "json",
+              "yaml",
+              "lua",
+              "cmake",
+            },
             config = {
               tabwidth = 2,
             },
@@ -452,6 +461,14 @@ local plugins = {
     },
   },
 
+  {
+    "edluffy/hologram.nvim",
+    config = function()
+      require("hologram").setup {
+        auto_display = true, -- WIP automatic markdown image display, may be prone to breaking
+      }
+    end,
+  },
   -- {
   --   "kevinhwang91/nvim-bqf",
   --   ft = {"cmake", "cpp", "python", "lua"},

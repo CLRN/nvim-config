@@ -373,7 +373,7 @@ local plugins = {
       require("tabset").setup {
         languages = {
           {
-            filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact", "json", "yaml", "lua" },
+            filetypes = { "javascript", "typescript", "javascriptreact", "typescriptreact", "json", "yaml", "lua", "cmake" },
             config = {
               tabwidth = 2,
             },
@@ -425,7 +425,7 @@ local plugins = {
   },
 
   {
-    "TillerBurr/NotebookNavigator.nvim",
+    "GCBallesteros/NotebookNavigator.nvim",
     event = "BufEnter *.ipynb",
     config = function()
       local nn = require "notebook-navigator"
@@ -444,7 +444,6 @@ local plugins = {
         },
       }
     end,
-    branch = "molten",
     dependencies = {
       "echasnovski/mini.comment",
       "benlubas/molten-nvim",

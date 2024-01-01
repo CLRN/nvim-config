@@ -5,12 +5,10 @@ package.path = table.concat({
 }, ";")
 
 require("image").setup {
-  backend = "ueberzug",
+  backend = "kitty",
   window_overlap_clear_enabled = true,
   tmux_show_only_in_active_window = true,
   window_overlap_clear_ft_ignore = {},
-  max_width = 80,
-  max_height = 12,
   max_width_window_percentage = math.huge,
   max_height_window_percentage = math.huge,
 }

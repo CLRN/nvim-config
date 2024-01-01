@@ -58,17 +58,17 @@ local mime_type_handlers = {
   end,
 }
 
-local state = {}
+local buffer_state = {}
 
-local function render(buffer_state)
+local function render(state)
   local bufnr = vim.api.nvim_get_current_buf()
 
   -- clear buffer
   vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, {})
 
   local text_line_num = 0
-  local cell_marks = {}
-  for _, cell in ipairs(buffer_state.cells) do
+  local cell_lines = {}
+  for _, cell in ipairs(state.book.cells) do
     -- parse lines and insert code
     local contents = {}
     table.insert(contents, "# %%")
@@ -76,7 +76,7 @@ local function render(buffer_state)
     table.insert(contents, "")
 
     -- remember cell begin via ext mark
-    table.insert(cell_marks, vim.api.nvim_buf_set_extmark(bufnr, ns_id, text_line_num, 0, {}))
+    table.insert(cell_lines, text_line_num)
 
     -- set lines to the buffer
     vim.api.nvim_buf_set_lines(0, text_line_num, -1, false, contents)
@@ -96,21 +96,31 @@ local function render(buffer_state)
     end
   end
 
+  for _, line in ipairs(cell_lines) do
+    local mark_id = vim.api.nvim_buf_set_extmark(bufnr, ns_id, line, 0, {})
+    table.insert(state.marks, mark_id)
+  end
+
   -- vim.api.nvim_buf_set_option(0, "filetype", "python")
 end
 
 function M.load()
   local bufnr = vim.api.nvim_get_current_buf()
 
-  state[bufnr] =
-    vim.fn.json_decode(table.concat(vim.api.nvim_buf_get_lines(0, 0, vim.api.nvim_buf_line_count(0), false), "\n"))
-  render(state[bufnr])
+  buffer_state[bufnr] = {
+    book = vim.fn.json_decode(
+      table.concat(vim.api.nvim_buf_get_lines(0, 0, vim.api.nvim_buf_line_count(0), false), "\n")
+    ),
+    marks = {},
+  }
+
+  render(buffer_state[bufnr])
 end
 
 function M.save()
   local bufnr = vim.api.nvim_get_current_buf()
 
-  local data = vim.fn.json_encode(state[bufnr])
+  local data = vim.fn.json_encode(buffer_state[bufnr].book)
 
   local file = assert(io.open(vim.api.nvim_buf_get_name(bufnr), "w"))
 
@@ -121,7 +131,6 @@ end
 function M.show()
   local api = require "image"
   for _, img in ipairs(api.get_images()) do
-    vim.print(img)
     img:render()
   end
 end
@@ -159,6 +168,26 @@ function M.win()
   -- end, 5000)
 end
 
+function M.execute_current_cell()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local cursor = vim.api.nvim_win_get_cursor(vim.api.nvim_get_current_win())
+  local start = 0
+  local stop = -1
+
+  for idx, mark_id in ipairs(buffer_state[bufnr].marks) do
+    local mark = vim.api.nvim_buf_get_extmark_by_id(bufnr, ns_id, mark_id, {})
+    local mark_line = mark[1]
+    if mark_line > cursor[1] then
+      stop = mark_line - 1
+      break
+    end
+    start = mark_line
+  end
+
+  local lines = vim.api.nvim_buf_get_lines(bufnr, start, stop, false)
+  vim.print(lines)
+end
+
 vim.keymap.set("n", "<leader>qq", function()
   M.load()
 end, { remap = true })
@@ -173,6 +202,10 @@ end, { remap = true })
 
 vim.keymap.set("n", "<leader>qc", function()
   M.hide()
+end, { remap = true })
+
+vim.keymap.set("n", "<leader>qx", function()
+  M.execute_current_cell()
 end, { remap = true })
 
 vim.keymap.set("n", "<leader>qw", function()

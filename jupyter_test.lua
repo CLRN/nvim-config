@@ -1,5 +1,8 @@
 local M = {}
 
+local jupyter = require "custom.jupyter_server"
+local async = require "plenary.async"
+
 local ns_id = vim.api.nvim_create_namespace "jupyter"
 
 local function add_virtual_text(lines, line_num)
@@ -31,7 +34,7 @@ local mime_type_handlers = {
       if type(data) == "table" then
         parse_lines(data, cell_output)
       else
-        parse_lines(vim.split(data, "n"), cell_output)
+        parse_lines(vim.split(data, "\n"), cell_output)
       end
       return { ext_mark = add_virtual_text(cell_output, line_num - 1) }
     end
@@ -68,7 +71,7 @@ local function render(state)
 
   local text_line_num = 0
   local cell_lines = {}
-  for _, cell in ipairs(state.book.cells) do
+  for cell_idx, cell in ipairs(state.book.cells) do
     -- parse lines and insert code
     local contents = {}
     table.insert(contents, "# %%")
@@ -83,35 +86,88 @@ local function render(state)
     text_line_num = text_line_num + #contents
 
     -- parse stdout, add empty line for each cell output and attach extmarks to it
+    local output_marks = {}
     for _, out in ipairs(cell.outputs) do
       vim.api.nvim_buf_set_lines(0, text_line_num, -1, false, { "" })
 
-      mime_type_handlers["text/plain"](out.text, text_line_num)
+      local text_out = mime_type_handlers["text/plain"](out.text, text_line_num)
+      if text_out and text_out.ext_mark then
+        table.insert(output_marks, text_out.ext_mark)
+      end
 
       for mime, data in pairs(out.data or {}) do
-        mime_type_handlers[mime](data, text_line_num)
+        local outputs = mime_type_handlers[mime](data, text_line_num)
+        if outputs.ext_mark then
+          table.insert(output_marks, outputs.ext_mark)
+        end
       end
 
       text_line_num = text_line_num + 1
     end
+
+    state.output_marks[cell_idx] = output_marks
   end
 
   for _, line in ipairs(cell_lines) do
-    local mark_id = vim.api.nvim_buf_set_extmark(bufnr, ns_id, line, 0, {})
-    table.insert(state.marks, mark_id)
+    local mark_id = vim.api.nvim_buf_set_extmark(bufnr, ns_id, line, 0, { sign_text = "▶" })
+    table.insert(state.cell_marks, mark_id)
   end
+
+  vim.print(state.output_marks)
 
   -- vim.api.nvim_buf_set_option(0, "filetype", "python")
 end
 
+local function handle_jupyter_output(bufnr, msg_id, lines)
+  local cell_idx = buffer_state[bufnr].message_to_cell_idx[msg_id]
+  local marks = buffer_state[bufnr].output_marks[cell_idx]
+  if marks then
+    local mark = vim.api.nvim_buf_get_extmark_by_id(bufnr, ns_id, marks[1], {})
+    buffer_state[bufnr].output_marks[cell_idx] = { add_virtual_text(lines, mark[1]) }
+  end
+  for _, mark in ipairs(marks) do
+    vim.api.nvim_buf_del_extmark(bufnr, ns_id, mark)
+  end
+end
+
 function M.load()
   local bufnr = vim.api.nvim_get_current_buf()
+  async.run(function()
+    local jupyter_data = jupyter {
+      on_kernel_status = function(status)
+        print("kernel", status)
+      end,
+      on_cell_status = function(msg_id, status)
+        local cell_idx = buffer_state[bufnr].message_to_cell_idx[msg_id]
+        local mark_id = buffer_state[bufnr].cell_marks[cell_idx]
+        local mark = vim.api.nvim_buf_get_extmark_by_id(bufnr, ns_id, mark_id, {})
+        local sign = "▶"
+        if status == "running" then
+          sign = "."
+        elseif status == "error" then
+          sign = "X"
+        end
+        buffer_state[bufnr].cell_marks[cell_idx] =
+          vim.api.nvim_buf_set_extmark(bufnr, ns_id, mark[1], 0, { sign_text = sign })
+      end,
+      on_error = function(msg_id, lines)
+        handle_jupyter_output(bufnr, msg_id, lines)
+      end,
+      on_output = function(msg_id, text)
+        handle_jupyter_output(bufnr, msg_id, vim.split(text, "\n"))
+      end,
+    }
+    buffer_state[bufnr].send = jupyter_data.send
+    buffer_state[bufnr].shutdown = jupyter_data.stop
+  end)
 
   buffer_state[bufnr] = {
     book = vim.fn.json_decode(
       table.concat(vim.api.nvim_buf_get_lines(0, 0, vim.api.nvim_buf_line_count(0), false), "\n")
     ),
-    marks = {},
+    cell_marks = {},
+    output_marks = {},
+    message_to_cell_idx = {},
   }
 
   render(buffer_state[bufnr])
@@ -173,8 +229,9 @@ function M.execute_current_cell()
   local cursor = vim.api.nvim_win_get_cursor(vim.api.nvim_get_current_win())
   local start = 0
   local stop = -1
+  local cell_idx = 0
 
-  for idx, mark_id in ipairs(buffer_state[bufnr].marks) do
+  for idx, mark_id in ipairs(buffer_state[bufnr].cell_marks) do
     local mark = vim.api.nvim_buf_get_extmark_by_id(bufnr, ns_id, mark_id, {})
     local mark_line = mark[1]
     if mark_line > cursor[1] then
@@ -182,10 +239,15 @@ function M.execute_current_cell()
       break
     end
     start = mark_line
+    cell_idx = idx
   end
 
   local lines = vim.api.nvim_buf_get_lines(bufnr, start, stop, false)
-  vim.print(lines)
+  local msg_id = buffer_state[bufnr].send(table.concat(lines, "\n"))
+  buffer_state[bufnr].message_to_cell_idx[msg_id] = cell_idx
+
+  -- TODO: try to change jupyter server to work through async corotines and
+  -- generate events right there without callbacks
 end
 
 vim.keymap.set("n", "<leader>qq", function()

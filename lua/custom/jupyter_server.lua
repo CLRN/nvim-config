@@ -64,6 +64,7 @@ local function create_kernel()
   return port, kernel_id, server_process
 end
 
+---@param args { on_kernel_status: function, on_error: function, on_cell_status: function, on_output: function }
 local function start_jupyter(args)
   local port, kernel_id, kernel_process = create_kernel()
   local sock = Websocket:new {

@@ -64,7 +64,7 @@ local function create_kernel()
   return port, kernel_id, server_process
 end
 
----@param args { on_kernel_status: function, on_error: function, on_cell_status: function, on_output: function }
+---@param args { on_kernel_status: function, on_error: function, on_cell_status: function, on_output: function, on_display_data: function }
 local function start_jupyter(args)
   local port, kernel_id, kernel_process = create_kernel()
   local sock = Websocket:new {
@@ -108,24 +108,27 @@ local function start_jupyter(args)
       if frame.opcode == Opcodes.TEXT then
         local body = vim.json.decode(frame.payload)
         if body.msg_type == "status" then
-          vim.notify("The kernel is " .. body.content.execution_state)
+          vim.notify("The kernel is " .. body.content.execution_state, vim.log.levels.DEBUG)
           args.on_kernel_status(body.content.execution_state)
 
           if body.content.execution_state == "idle" then
             -- TODO: check if queing is needed here or we can just send all requests and let them queue on the server
           end
         elseif body.msg_type == "error" then
-          vim.notify("Error " .. table.concat(body.content.traceback, "\n"))
+          vim.notify("Error " .. table.concat(body.content.traceback, "\n"), vim.log.levels.DEBUG)
           args.on_error(body.parent_header.msg_id, body.content.traceback)
         elseif body.msg_type == "execute_reply" then
-          vim.notify("The execution is finished with " .. body.content.status)
+          vim.notify("The execution is finished with " .. body.content.status, vim.log.levels.DEBUG)
           args.on_cell_status(body.parent_header.msg_id, body.content.status)
         elseif body.msg_type == "stream" then
-          vim.notify("Output to " .. body.content.name .. " is " .. body.content.text)
+          vim.notify("Output to " .. body.content.name .. " is " .. body.content.text, vim.log.levels.DEBUG)
           args.on_output(body.parent_header.msg_id, body.content.text)
         elseif body.msg_type == "execute_input" then
           args.on_cell_status(body.parent_header.msg_id, "running")
-          vim.notify "The execution has started"
+          vim.notify("The execution has started", vim.log.levels.DEBUG)
+        elseif body.msg_type == "display_data" then
+          vim.notify("Got image", vim.log.levels.DEBUG)
+          args.on_display_data(body.parent_header.msg_id, body.content)
         else
           vim.print(body)
         end

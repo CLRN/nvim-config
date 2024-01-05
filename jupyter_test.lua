@@ -42,8 +42,14 @@ local M = {}
 local jupyter = require "custom.jupyter_server"
 local async = require "plenary.async"
 local image = require "image"
+local colors = require "baleia.nvim.colors"
+local ansi = require "baleia.colors.ansi"
+local locations = require "baleia.locations"
+local styles = require "baleia.styles"
+local text = require "baleia.text"
 
 local ns_id = vim.api.nvim_create_namespace "jupyter"
+local output_line_limit = 20
 
 ---@type table<ExecutionState, string>
 local state_sign_map = {
@@ -55,15 +61,35 @@ local state_sign_map = {
 --- @param lines string[]
 --- @param line_num integer
 --- @return integer
-local function add_virtual_text(lines, line_num)
+local function set_output_text(lines, line_num)
+  local styles_per_line = {}
+
+  for _, location in ipairs(locations.extract(lines)) do
+    styles_per_line[location.from.line] = location.style
+  end
+
   local virt_lines = {}
-  for _, line in ipairs(lines) do
-    table.insert(virt_lines, { { line, "" } })
+  for idx, line in ipairs(text.strip_color_codes(lines)) do
+    local style = styles_per_line[idx]
+    if style then
+      local name = styles.name("JupyterColors", style)
+      local attributes = styles.attributes(style, colors.theme(ansi.NR_8))
+      vim.api.nvim_set_hl(0, name, attributes)
+
+      table.insert(virt_lines, { { line, { "Comment", name } } })
+    else
+      table.insert(virt_lines, { { line, "Comment" } })
+    end
+  end
+
+  if #virt_lines > output_line_limit then
+    virt_lines = vim.list_slice(virt_lines, #virt_lines - output_line_limit, #virt_lines)
   end
 
   local col_num = 0
   return vim.api.nvim_buf_set_extmark(vim.api.nvim_get_current_buf(), ns_id, line_num, col_num, {
     virt_lines = virt_lines,
+    sign_text = "O",
   })
 end
 
@@ -71,10 +97,14 @@ end
 --- @param out string[]
 local function parse_lines(lines, out)
   for _, src in ipairs(lines) do
-    if src:sub(-1) == "\n" then
-      table.insert(out, src:sub(1, -2))
+    if src == "\n" then
+      table.insert(out, "")
     else
-      table.insert(out, src)
+      for _, p in ipairs(vim.split(src, "\n")) do
+        if p ~= "" then
+          table.insert(out, p)
+        end
+      end
     end
   end
 end
@@ -88,7 +118,7 @@ local mime_type_handlers = {
       else
         parse_lines(vim.split(data, "\n"), cell_output)
       end
-      return { ext_mark = add_virtual_text(cell_output, line_num - 1) }
+      return { ext_mark = set_output_text(cell_output, line_num - 1) }
     end
   end,
   ["image/png"] = function(data, line_num)
@@ -129,17 +159,22 @@ local function load_cell(jupyter_cell, cell_idx, start_line, execution_state)
     vim.api.nvim_buf_del_extmark(bufnr, ns_id, cell.begin_mark)
   end
 
-  local end_line = -1
   for _, mark_id in ipairs((cell or {}).output_marks or {}) do
-    local mark_data = vim.api.nvim_buf_get_extmark_by_id(bufnr, ns_id, mark_id, {})
-    if mark_data then
-      end_line = mark_data[1] + 1
-    end
     vim.api.nvim_buf_del_extmark(bufnr, ns_id, mark_id)
   end
 
   for _, image_id in ipairs((cell or {}).images or {}) do
     image.clear(image_id)
+  end
+
+  -- find next cell
+  local end_line = -1
+  local next_cell = buffer_state[bufnr].cells[cell_idx + 1]
+  if next_cell then
+    local next_mark = vim.api.nvim_buf_get_extmark_by_id(bufnr, ns_id, next_cell.begin_mark, {})
+    if next_mark then
+      end_line = next_mark[1] - 1
+    end
   end
 
   -- parse lines and insert code
@@ -243,12 +278,9 @@ local function handle_jupyter_output(bufnr, msg_id, lines)
       end
     end
 
-    local new_mark_id = add_virtual_text(buffer_state[bufnr].book.cells[cell_idx].outputs[1].text, mark[1])
-    vim.print(lines, buffer_state[bufnr].book.cells[cell_idx].outputs[1].text)
+    local new_mark_id = set_output_text(buffer_state[bufnr].book.cells[cell_idx].outputs[1].text, mark[1])
 
-    -- vim.print(existing_lines, line_num, mark_id, new_mark_id)
     if mark_id ~= new_mark_id then
-      -- vim.print("mark id changed for cell " .. cell_idx .. " from " .. mark_id .. " to " .. new_mark_id)
       vim.api.nvim_buf_del_extmark(bufnr, ns_id, mark_id)
       buffer_state[bufnr].cells[cell_idx].output_marks = { new_mark_id }
     end
@@ -259,13 +291,13 @@ function M.load()
   local bufnr = vim.api.nvim_get_current_buf()
   async.run(function()
     local jupyter_data = jupyter {
-      on_kernel_status = function(status)
-        print("kernel", status)
-      end,
+      on_kernel_status = function(status) end,
       on_cell_status = function(msg_id, status)
         local cell_idx = buffer_state[bufnr].message_to_cell_idx[msg_id]
+        if not cell_idx then
+          return
+        end
         local cell = buffer_state[bufnr].cells[cell_idx]
-
         local mark = vim.api.nvim_buf_get_extmark_by_id(bufnr, ns_id, cell.begin_mark, {})
 
         if status == "running" then
@@ -280,6 +312,13 @@ function M.load()
       end,
       on_output = function(msg_id, text)
         handle_jupyter_output(bufnr, msg_id, vim.split(text, "\n"))
+      end,
+      on_display_data = function(msg_id, data)
+        local cell_idx = buffer_state[bufnr].message_to_cell_idx[msg_id]
+        table.insert(buffer_state[bufnr].book.cells[cell_idx].outputs, data)
+        local cell = buffer_state[bufnr].cells[cell_idx]
+        local mark = vim.api.nvim_buf_get_extmark_by_id(bufnr, ns_id, cell.begin_mark, {})
+        load_cell(buffer_state[bufnr].book.cells[cell_idx], cell_idx, mark[1])
       end,
     }
     buffer_state[bufnr].send = jupyter_data.send
@@ -358,10 +397,16 @@ function M.execute_current_cell()
     table.remove(lines, #lines)
   end
 
-  -- reset state and output
-  load_cell(buffer_state[bufnr].book.cells[cell.cell_idx], cell.cell_idx, cell.start_line)
+  -- jupyter stores end line in all lines except last
+  for idx, line in ipairs(lines) do
+    if idx ~= #lines then
+      lines[idx] = line .. "\n"
+    end
+  end
 
+  -- reset state and output, save code to the jupyter cells
   buffer_state[bufnr].book.cells[cell.cell_idx].source = lines
+  load_cell(buffer_state[bufnr].book.cells[cell.cell_idx], cell.cell_idx, cell.start_line)
 
   local msg_id = buffer_state[bufnr].send(table.concat(lines, "\n"))
   buffer_state[bufnr].message_to_cell_idx[msg_id] = cell.cell_idx

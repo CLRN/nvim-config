@@ -49,7 +49,6 @@ M.mason = {
     "ruff",
     "pyright",
     "isort",
-    "djhtml",
 
     -- shell
     "beautysh",

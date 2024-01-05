@@ -13,6 +13,10 @@ M.treesitter = {
     "markdown",
     "markdown_inline",
     "python",
+    "json",
+    "yaml",
+    "cmake",
+    "cpp",
   },
   indent = {
     enable = true,
@@ -44,9 +48,12 @@ M.mason = {
     "mypy",
     "ruff",
     "pyright",
+    "isort",
+    "djhtml",
 
     -- shell
-    "beautysh"
+    "beautysh",
+    "curlylint",
   },
 }
 

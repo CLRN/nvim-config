@@ -144,25 +144,21 @@ M.dap = {
     ["<leader>pi"] = { "<cmd> PyrightOrganizeImports <CR>" },
     ["<leader>pp"] = { "<cmd> PyrightSetPythonPath " .. (vim.env.VIRTUAL_ENV or "") .. " <CR>" },
 
-    ["<F5>"] = {
-      function()
-        require("dap").step_out()
-      end,
-    },
-    ["<F8>"] = { "<cmd> DapStepOver <CR>" },
-    ["<F7>"] = { "<cmd> DapStepInto <CR>" },
-    ["<F9>"] = {
-      function()
-        -- (Re-)reads launch.json if present
-        vim.cmd "wa"
-        if vim.fn.filereadable ".vscode/launch.json" then
-          require("dap.ext.vscode").load_launchjs(nil, { cpptools = { "c", "cpp" } })
-        end
-        require("dap").continue()
-      end,
-    },
-    ["<F4>"] = { "<cmd> DapTerminate <CR>" },
-  },
+    ["<F5>"] = {function ()
+      require("dap").step_out()
+    end},
+    ["<F8>"] = {"<cmd> DapStepOver <CR>"},
+    ["<F7>"] = {"<cmd> DapStepInto <CR>"},
+    ["<F9>"] = {function()
+      -- (Re-)reads launch.json if present
+      pcall(vim.cmd, "wa")
+      if vim.fn.filereadable(".vscode/launch.json") then
+        require("dap.ext.vscode").load_launchjs(nil, { cpptools = { "c", "cpp" } })
+      end
+      require("dap").continue()
+    end},
+    ["<F4>"] = {"<cmd> DapTerminate <CR>"},
+  }
 }
 
 M.dap_python = {

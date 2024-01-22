@@ -197,7 +197,7 @@ local plugins = {
           end
         end,
         -- position of virtual text, see `:h nvim_buf_set_extmark()`, default tries to inline the virtual text. Use 'eol' to set to end of line
-        virt_text_pos = vim.fn.has "nvim-0.10" == 1 and "inline" or "eol",
+        virt_text_pos = "eol",
 
         -- experimental features:
         all_frames = false, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
@@ -367,7 +367,7 @@ local plugins = {
     end,
   },
   {
-    ft = { "javascript", "typescript", "javascriptreact", "typescriptreact", "json", "yaml", "lua" },
+    ft = { "javascript", "typescript", "javascriptreact", "typescriptreact", "json", "yaml", "lua", "cmake" },
     "FotiadisM/tabset.nvim",
     config = function()
       require("tabset").setup {
@@ -401,13 +401,12 @@ local plugins = {
 
   {
     "3rd/image.nvim",
-    enabled = false,
     event = {
       "FileType markdown,norg",
       "BufRead *.png,*.jpg,*.gif,*.webp,*.ipynb",
     },
     build = {
-      "ueberzug version",
+      "ueberzug --version",
       "magick --version",
       "luarocks --lua-version 5.1 --local install magick",
     },
@@ -416,21 +415,69 @@ local plugins = {
     end,
   },
 
+  {
+    "taybart/b64.nvim",
+  },
+
+  {
+    "CLRN/websocket.nvim",
+    branch = "fix-multiple-frames-in-a-packet",
+  },
+
+  {
+    "m00qek/baleia.nvim",
+    config = function()
+      require("baleia").setup {}
+    end,
+  },
+  -- {
+  --   "benlubas/molten-nvim",
+  --   build = function()
+  --     vim.fn["remote#host#UpdateRemotePlugins"]()
+  --     vim.cmd(string.format("source %s", vim.g.loaded_remote_plugins))
+  --   end,
+  --   config = function()
+  --     require "custom.configs.molten"
+  --   end,
+  -- },
+
+  -- {
+  --   "GCBallesteros/jupytext.nvim",
+  --   config = true,
+  --   lazy = false,
+  -- },
+
+  -- {
+  --   "GCBallesteros/NotebookNavigator.nvim",
+  --   event = "BufEnter *.ipynb",
+  --   config = function()
+  --     local nn = require "notebook-navigator"
+  --     nn.setup {
+  --       activate_hydra_keys = "<leader>h",
+  --       repl_provider = "molten",
+  --       show_hydra_hint = false,
+  --       hydra_keys = {
+  --         comment = "c",
+  --         run = "<CR>",
+  --         run_and_move = "<C-CR>",
+  --         move_up = "l",
+  --         move_down = "k",
+  --         add_cell_before = "a",
+  --         add_cell_after = "b",
+  --       },
+  --     }
+  --   end,
+  --   dependencies = {
+  --     "echasnovski/mini.comment",
+  --     "benlubas/molten-nvim",
+  --     "anuvyklack/hydra.nvim",
+  --     -- "3rd/image.nvim"
+  --   },
+  -- },
+
   -- {
   --   "kevinhwang91/nvim-bqf",
   --   ft = {"cmake", "cpp", "python", "lua"},
-  -- }
-  -- {
-  --   "m00qek/baleia.nvim",
-  --   config = function()
-  --     local baleia = require("baleia").setup {}
-  --
-  --     vim.api.nvim_create_user_command("BaleiaColorize", function()
-  --       vim.opt_local.modifiable = true
-  --       baleia.once(vim.api.nvim_get_current_buf())
-  --       vim.opt_local.modifiable = false
-  --     end, { force = true })
-  --   end,
   -- }
 
   -- {

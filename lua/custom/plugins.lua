@@ -430,6 +430,7 @@ local plugins = {
       require("baleia").setup {}
     end,
   },
+
   {
     "folke/noice.nvim",
     event = "VeryLazy",
@@ -464,6 +465,38 @@ local plugins = {
       "rcarriga/nvim-notify",
     },
   },
+
+  {
+    "nvim-neorg/neorg",
+    event = "VeryLazy",
+    build = ":Neorg sync-parsers",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      vim.filetype.add {
+        pattern = {
+          [".*%.norg.*"] = "norg",
+        },
+      }
+      require("neorg").setup {
+        load = {
+          ["core.defaults"] = {}, -- Loads default behaviour
+          ["core.concealer"] = {}, -- Adds pretty icons to your documents
+          ["core.esupports.indent"] = {},
+          ["core.itero"] = {},
+          ["core.keybinds"] = {},
+          ["core.dirman"] = { -- Manages Neorg workspaces
+            config = {
+              workspaces = {
+                work = "~/work/docs/notes",
+                home = "~/home/docs/notes",
+              },
+            },
+          },
+        },
+      }
+    end,
+  },
+
   -- {
   --   "benlubas/molten-nvim",
   --   build = function()

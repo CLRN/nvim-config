@@ -479,12 +479,12 @@ local plugins = {
       }
       require("neorg").setup {
         load = {
-          ["core.defaults"] = {}, -- Loads default behaviour
-          ["core.concealer"] = {}, -- Adds pretty icons to your documents
+          ["core.defaults"] = {},
+          ["core.concealer"] = {},
           ["core.esupports.indent"] = {},
           ["core.itero"] = {},
           ["core.keybinds"] = {},
-          ["core.dirman"] = { -- Manages Neorg workspaces
+          ["core.dirman"] = {
             config = {
               workspaces = {
                 work = "~/work/docs/notes",

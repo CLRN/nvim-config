@@ -86,6 +86,7 @@ M.general = {
     ["<leader>sk"] = { "<cmd> Telescope keymaps <CR>" },
     ["<leader>sh"] = { "<cmd> Telescope command_history <CR>" },
     ["<leader>sn"] = { "<cmd> Telescope notify <CR>" },
+    ["<leader>sb"] = { "<cmd> Telescope buffers <CR>" },
 
     ["<A-1>"] = { "<cmd> 1tabnext<CR>", "Go to tab" },
     ["<A-2>"] = { "<cmd> 2tabnext<CR>", "Go to tab" },
@@ -134,6 +135,10 @@ M.dap = {
   },
   n = {
     ["<leader>db"] = { "<cmd> DapToggleBreakpoint <CR>" },
+    ["<leader>dc"] = { function()
+      local input = vim.fn.input "condition: "
+      require("dap").toggle_breakpoint(input)
+    end},
     ["<leader>du"] = { "<cmd> lua require('dapui').toggle() <CR>" },
     ["<leader>dr"] = { "<cmd> lua require('dapui').float_element('repl') <CR>" },
     ["<leader>de"] = { "<cmd> lua require('dapui').eval() <CR>" },

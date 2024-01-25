@@ -123,7 +123,6 @@ M.general = {
     --
   },
   v = {
-    ["<leader>cc"] = { "<cmd> lua require('osc52').copy_visual() <CR>" },
     -- [">"] = { ">gv", "indent"},
   },
 }

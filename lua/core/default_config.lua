@@ -40,13 +40,20 @@ M.ui = {
         modules,
         7,
         (function()
-          local cmake = require("cmake-tools")
+          local cmake = require "cmake-tools"
           if cmake.is_cmake_project() then
             local build = "⚒[" .. (cmake.get_build_target() or "") .. "] "
             local launch = "▶[" .. (cmake.get_launch_target() or "") .. "] "
             return "%#St_LspStatus# " .. build .. launch
           end
           return ""
+        end)()
+      )
+      table.insert(
+        modules,
+        8,
+        (function()
+          return (require("noice").api.statusline.mode.get() or "") .. " "
         end)()
       )
     end,

@@ -209,6 +209,7 @@ local plugins = {
   },
   {
     "Civitasv/cmake-tools.nvim",
+    commit = "aba5b80",
     ft = { "cmake", "cpp" },
     config = function(_, opts)
       require("cmake-tools").setup {

@@ -424,6 +424,10 @@ local plugins = {
       "magick --version",
       "luarocks --lua-version 5.1 --local install magick",
     },
+    enabled = function ()
+      vim.fn.system("magick --version")
+      return vim.v.shell_error == 0
+    end,
     config = function()
       require "custom.configs.image"
     end,

@@ -29,9 +29,8 @@ M.general = {
     ["<C-k>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>j", true, true, true), "Escape and go to window" },
     ["<C-l>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>k", true, true, true), "Escape and go to window" },
 
-    -- back and forward
+    -- back
     ["<C-o>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N><C-o>", true, true, true), "Escape and go back" },
-    ["<C-i>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N><C-i>", true, true, true), "Escape and go forward" },
 
     -- paste
     ["<C-p>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>pi", true, true, true), "Escape and paste" },

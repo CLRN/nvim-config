@@ -32,9 +32,6 @@ M.general = {
     -- back
     ["<C-o>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N><C-o>", true, true, true), "Escape and go back" },
 
-    -- paste
-    ["<C-p>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>pi", true, true, true), "Escape and paste" },
-
     -- harpoon
     ["<A-y>"] = {
       vim.api.nvim_replace_termcodes(

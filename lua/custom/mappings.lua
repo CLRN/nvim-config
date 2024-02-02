@@ -185,7 +185,7 @@ M.cmake_tools = {
     ["<leader>cb"] = { "<cmd> CMakeBuild <CR>" },
     ["<leader>cd"] = { "<cmd> CMakeDebug <CR>" },
     ["<leader>cr"] = { "<cmd> CMakeRun <CR>" },
-    ["<leader>cs"] = { "<cmd> CMakeStop <CR>" },
+    ["<leader>cs"] = { "<cmd> CMakeStopExecutor <CR>" },
     ["<leader>ctb"] = {
       function()
         require("cmake-tools").select_build_target(function()

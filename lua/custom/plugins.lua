@@ -468,6 +468,9 @@ local plugins = {
           signature = {
             enabled = false,
           },
+          progress = {
+            enabled = false,
+          }
         },
         -- you can enable a preset for easier configuration
         presets = {

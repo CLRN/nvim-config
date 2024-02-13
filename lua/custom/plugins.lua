@@ -212,23 +212,31 @@ local plugins = {
     commit = "aba5b80",
     ft = { "cmake", "cpp" },
     config = function(_, opts)
+      local gen_opts_bb = {
+        "-DCMAKE_EXPORT_COMPILE_COMMANDS=1",
+        "-DCMAKE_VERBOSE_MAKEFILE=OFF",
+        "-DCMAKE_TOOLCHAIN_FILE="
+          .. (os.getenv "DISTRIBUTION_REFROOT" or "")
+          .. "/opt/bb/share/plink/BBToolchain64.cmake",
+        "-DCMAKE_INSTALL_LIBDIR=.",
+        "-DCMAKE_BUILD_TYPE=Debug",
+        "-DCMAKE_CXX_STANDARD=17",
+        "-DBUILDID=dev",
+        "-DCMAKE_OUTPUT_DIR=.",
+      }
+
+      local gen_opts_clang = {
+        "-DCMAKE_C_COMPILER=clang",
+        "-DCMAKE_CXX_COMPILER=clang++",
+        "-GNinja",
+      }
+
       require("cmake-tools").setup {
         cmake_command = "cmake", -- this is used to specify cmake command path
         cmake_regenerate_on_save = true, -- auto generate when save CMakeLists.txt
         --
-        cmake_generate_options = {
-          "-DCMAKE_EXPORT_COMPILE_COMMANDS=1",
-          "-DCMAKE_VERBOSE_MAKEFILE=OFF",
-          "-DCMAKE_TOOLCHAIN_FILE="
-            .. (os.getenv "DISTRIBUTION_REFROOT" or "")
-            .. "/opt/bb/share/plink/BBToolchain64.cmake",
-          "-DCMAKE_INSTALL_LIBDIR=.",
-          "-DCMAKE_BUILD_TYPE=Debug",
-          "-DCMAKE_CXX_STANDARD=17",
-          "-DBUILDID=dev",
-          "-DCMAKE_OUTPUT_DIR=.",
-        }, -- this will be passed when invoke `CMakeGenerate`
-        cmake_build_options = { "-j", "16" }, -- this will be passed when invoke `CMakeBuild`
+        cmake_generate_options = os.execute "ls /opt/bb/bin/g++" == 0 and gen_opts_bb or gen_opts_clang, -- this will be passed when invoke `CMakeGenerate`
+        cmake_build_options = { "-j", "6" }, -- this will be passed when invoke `CMakeBuild`
         -- support macro expansion:
         --       ${kit}
         --       ${kitGenerator}
@@ -335,17 +343,17 @@ local plugins = {
     "ojroques/nvim-osc52",
     config = function()
       local function copy(lines, _)
-        require('osc52').copy(table.concat(lines, '\n'))
+        require("osc52").copy(table.concat(lines, "\n"))
       end
 
       local function paste()
-        return {vim.fn.split(vim.fn.getreg(''), '\n'), vim.fn.getregtype('')}
+        return { vim.fn.split(vim.fn.getreg "", "\n"), vim.fn.getregtype "" }
       end
 
       vim.g.clipboard = {
-        name = 'osc52',
-        copy = {['+'] = copy, ['*'] = copy},
-        paste = {['+'] = paste, ['*'] = paste},
+        name = "osc52",
+        copy = { ["+"] = copy, ["*"] = copy },
+        paste = { ["+"] = paste, ["*"] = paste },
       }
 
       require("osc52").setup {
@@ -425,8 +433,8 @@ local plugins = {
       "magick --version",
       "luarocks --lua-version 5.1 --local install magick",
     },
-    enabled = function ()
-      vim.fn.system("magick --version")
+    enabled = function()
+      vim.fn.system "magick --version"
       return vim.v.shell_error == 0
     end,
     config = function()
@@ -470,7 +478,7 @@ local plugins = {
           },
           progress = {
             enabled = false,
-          }
+          },
         },
         -- you can enable a preset for easier configuration
         presets = {
@@ -553,10 +561,10 @@ local plugins = {
     "anuvyklack/hydra.nvim",
     event = "VeryLazy",
     config = function()
-      local Hydra = require("hydra")
+      local Hydra = require "hydra"
 
       local function cmd(command)
-        return table.concat({ ":", command, "<cr>" })
+        return table.concat { ":", command, "<cr>" }
       end
 
       local hint = [[
@@ -574,7 +582,7 @@ local plugins = {
 
       local opts = { exit = true, nowait = true }
 
-      Hydra({
+      Hydra {
         name = "Windows",
         hint = hint,
         config = {
@@ -588,29 +596,30 @@ local plugins = {
         mode = "n",
         body = "<leader>ww",
         heads = {
-          { "s", cmd("split"), opts },
-          { "v", cmd("vsplit"), opts },
-          { "c", cmd("close"), opts }, -- close current window
-          { "m", cmd("WindowsMaximize"), opts }, -- maximize current window
+          { "s", cmd "split", opts },
+          { "v", cmd "vsplit", opts },
+          { "c", cmd "close", opts }, -- close current window
+          { "m", cmd "WindowsMaximize", opts }, -- maximize current window
           -- window resizing
-          { "=", cmd("wincmd =") },
-          { "<Up>", cmd("wincmd +") },
-          { "<Down>", cmd("wincmd -") },
-          { "<Left>", cmd("wincmd <") },
-          { "<Right>", cmd("wincmd >") },
+          { "=", cmd "wincmd =" },
+          { "<Up>", cmd "wincmd +" },
+          { "<Down>", cmd "wincmd -" },
+          { "<Left>", cmd "wincmd <" },
+          { "<Right>", cmd "wincmd >" },
           -- move window around
-          { "j", cmd("wincmd H") },
-          { "k", cmd("wincmd J") },
-          { "l", cmd("wincmd K") },
-          { "'", cmd("wincmd L") },
+          { "j", cmd "wincmd H" },
+          { "k", cmd "wincmd J" },
+          { "l", cmd "wincmd K" },
+          { "'", cmd "wincmd L" },
           -- rotate window
-          { "r", cmd("wincmd r") },
-          { "R", cmd("wincmd R") },
+          { "r", cmd "wincmd r" },
+          { "R", cmd "wincmd R" },
           -- quit
           { "q", nil, opts },
           { "<Esc>", nil, opts },
-        },})
-    end
+        },
+      }
+    end,
   },
 
   -- {
@@ -675,4 +684,4 @@ local plugins = {
   -- }
 }
 
-  return plugins
+return plugins

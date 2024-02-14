@@ -116,6 +116,15 @@ local plugins = {
       local dap = require "dap"
       local dapui = require "dapui"
 
+      dap.adapters.codelldb = {
+        type = "server",
+        port = "${port}",
+        executable = {
+          command = "codelldb",
+          args = { "--port", "${port}" },
+        },
+      }
+
       dap.adapters.cppdbg = {
         id = "cppdbg",
         type = "executable",
@@ -232,6 +241,31 @@ local plugins = {
         "-GNinja",
       }
 
+      local dap_gdb = {
+        name = "cpp",
+        type = "cppdbg",
+        request = "launch",
+        stopOnEntry = false,
+        runInTerminal = true,
+        console = "integratedTerminal",
+        setupCommands = {
+          {
+            text = "-enable-pretty-printing",
+            description = "enable pretty printing",
+            ignoreFailures = false,
+          },
+        },
+      }
+
+      local dap_lldb = {
+        name = "cpp",
+        type = "codelldb",
+        request = "launch",
+        stopOnEntry = false,
+        runInTerminal = true,
+        console = "integratedTerminal",
+      }
+
       require("cmake-tools").setup {
         cmake_command = "cmake", -- this is used to specify cmake command path
         cmake_regenerate_on_save = true, -- auto generate when save CMakeLists.txt
@@ -250,21 +284,7 @@ local plugins = {
           short = { show = true }, -- whether to show short message
           long = { show = true, max_length = 40 }, -- whether to show long message
         },
-        cmake_dap_configuration = { -- debug settings for cmake
-          name = "cpp",
-          type = "cppdbg",
-          request = "launch",
-          stopOnEntry = false,
-          runInTerminal = true,
-          console = "integratedTerminal",
-          setupCommands = {
-            {
-              text = "-enable-pretty-printing",
-              description = "enable pretty printing",
-              ignoreFailures = false,
-            },
-          },
-        },
+        cmake_dap_configuration = os.execute "ls /opt/bb/bin/g++" == 0 and dap_gdb or dap_lldb,
         cmake_executor = { -- executor to use
           name = "quickfix", -- name of the executor
           opts = {}, -- the options the executor will get, possible values depend on the executor type. See `default_opts` for possible values.

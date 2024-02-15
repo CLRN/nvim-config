@@ -57,23 +57,15 @@ local plugins = {
             elements = {
               {
                 id = "scopes",
-                size = 0.70,
+                size = 0.50,
               },
               {
                 id = "breakpoints",
-                size = 0.05,
+                size = 0.10,
               },
               {
                 id = "stacks",
-                size = 0.05,
-              },
-              {
-                id = "watches",
-                size = 0.05,
-              },
-              {
-                id = "repl",
-                size = 0.15,
+                size = 0.40,
               },
             },
             position = "left",
@@ -272,10 +264,6 @@ local plugins = {
         --
         cmake_generate_options = os.execute "ls /opt/bb/bin/g++" == 0 and gen_opts_bb or gen_opts_clang, -- this will be passed when invoke `CMakeGenerate`
         cmake_build_options = { "-j", "6" }, -- this will be passed when invoke `CMakeBuild`
-        -- support macro expansion:
-        --       ${kit}
-        --       ${kitGenerator}
-        --       ${variant:xx}
         cmake_build_directory = "cmake-build/${variant:buildType}", -- this is used to specify generate directory for cmake, allows macro expansion
         cmake_soft_link_compile_commands = false, -- this will automatically make a soft link from compile commands file to project root dir
         cmake_compile_commands_from_lsp = true,

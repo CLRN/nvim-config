@@ -41,7 +41,7 @@ local bde_formatter = {
   method = { null_ls.methods.FORMATTING, null_ls.methods.RANGE_FORMATTING },
   filetypes = { "cpp" },
   generator = null_ls.formatter {
-    command = "bde-format-15",
+    command = os.execute "which bde-format-15" == 0 and "bde-format-15" or "clang-fomat",
     to_stdin = true,
     args = require("null-ls.helpers").range_formatting_args_factory(
       { "--assume-filename", "$FILENAME" },

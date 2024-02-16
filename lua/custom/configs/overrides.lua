@@ -40,7 +40,6 @@ M.mason = {
     "prettier",
 
     -- c/cpp stuff
-    "clangd",
     "clang-format",
 
     "black",

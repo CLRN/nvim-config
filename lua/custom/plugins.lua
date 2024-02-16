@@ -257,12 +257,13 @@ local plugins = {
         runInTerminal = true,
         console = "integratedTerminal",
       }
+      local is_bb = os.execute "ls /opt/bb/bin/g++ > /dev/null" == 0
 
       require("cmake-tools").setup {
         cmake_command = "cmake", -- this is used to specify cmake command path
         cmake_regenerate_on_save = true, -- auto generate when save CMakeLists.txt
         --
-        cmake_generate_options = os.execute "ls /opt/bb/bin/g++" == 0 and gen_opts_bb or gen_opts_clang, -- this will be passed when invoke `CMakeGenerate`
+        cmake_generate_options = is_bb and gen_opts_bb or gen_opts_clang, -- this will be passed when invoke `CMakeGenerate`
         cmake_build_options = { "-j", "6" }, -- this will be passed when invoke `CMakeBuild`
         cmake_build_directory = "cmake-build/${variant:buildType}", -- this is used to specify generate directory for cmake, allows macro expansion
         cmake_soft_link_compile_commands = false, -- this will automatically make a soft link from compile commands file to project root dir
@@ -272,7 +273,7 @@ local plugins = {
           short = { show = true }, -- whether to show short message
           long = { show = true, max_length = 40 }, -- whether to show long message
         },
-        cmake_dap_configuration = os.execute "ls /opt/bb/bin/g++" == 0 and dap_gdb or dap_lldb,
+        cmake_dap_configuration = is_bb and dap_gdb or dap_lldb,
         cmake_executor = { -- executor to use
           name = "quickfix", -- name of the executor
           opts = {}, -- the options the executor will get, possible values depend on the executor type. See `default_opts` for possible values.

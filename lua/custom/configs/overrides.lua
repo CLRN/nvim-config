@@ -41,6 +41,7 @@ M.mason = {
 
     -- c/cpp stuff
     "clang-format",
+    "codelldb",
 
     "black",
     "debugpy",

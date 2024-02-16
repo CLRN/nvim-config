@@ -257,7 +257,8 @@ local plugins = {
         runInTerminal = true,
         console = "integratedTerminal",
       }
-      local is_bb = os.execute "ls /opt/bb/bin/g++ > /dev/null" == 0
+
+      local is_bb = vim.fn.executable("/opt/bb/bin/g++") == 1
 
       require("cmake-tools").setup {
         cmake_command = "cmake", -- this is used to specify cmake command path

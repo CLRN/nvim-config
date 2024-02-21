@@ -398,6 +398,10 @@ local plugins = {
   {
     lazy = false,
     "rcarriga/nvim-notify",
+    enabled = function()
+      vim.fn.system "bbhost -q -w localhost sn2 fcldev"
+      return vim.v.shell_error ~= 0
+    end,
     config = function()
       require("telescope").load_extension "notify"
       vim.notify = require "notify"

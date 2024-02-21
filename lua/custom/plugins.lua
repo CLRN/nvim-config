@@ -212,6 +212,9 @@ local plugins = {
     "Civitasv/cmake-tools.nvim",
     commit = "aba5b80",
     ft = { "cmake", "cpp" },
+    enabled = function ()
+      return vim.fn.filewritable("CMakeLists.txt") == 1
+    end,
     config = function(_, opts)
       local gen_opts_bb = {
         "-DCMAKE_EXPORT_COMPILE_COMMANDS=1",

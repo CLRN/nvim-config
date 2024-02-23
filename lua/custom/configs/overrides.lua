@@ -43,6 +43,7 @@ M.mason = {
     "clang-format",
     "codelldb",
     "cpptools",
+    "cmake-language-server",
 
     -- python
     "black",

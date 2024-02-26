@@ -160,7 +160,8 @@ M.dap = {
       -- (Re-)reads launch.json if present
       pcall(vim.cmd, "wa")
       if vim.fn.filereadable(".vscode/launch.json") then
-        require("dap.ext.vscode").load_launchjs(nil, { cpptools = { "c", "cpp" } })
+        local vscode = require("dap.ext.vscode")
+        pcall(vscode.load_launchjs, nil, { cpptools = { "c", "cpp" } })
       end
       require("dap").continue()
     end},

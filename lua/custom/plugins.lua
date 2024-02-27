@@ -224,9 +224,9 @@ local plugins = {
           .. "/opt/bb/share/plink/BBToolchain64.cmake",
         "-DCMAKE_INSTALL_LIBDIR=.",
         "-DCMAKE_BUILD_TYPE=Debug",
-        "-DCMAKE_CXX_STANDARD=17",
         "-DBUILDID=dev",
         "-DCMAKE_OUTPUT_DIR=.",
+        "-GNinja",
       }
 
       local gen_opts_clang = {

@@ -54,6 +54,14 @@ local plugins = {
       dapui.setup {
         layouts = {
           {
+            elements = { {
+              id = "console",
+              size = 1,
+            } },
+            position = "bottom",
+            size = 15,
+          },
+          {
             elements = {
               {
                 id = "scopes",
@@ -69,15 +77,7 @@ local plugins = {
               },
             },
             position = "left",
-            size = 50,
-          },
-          {
-            elements = { {
-              id = "console",
-              size = 1,
-            } },
-            position = "bottom",
-            size = 20,
+            size = 60,
           },
         },
         mappings = {

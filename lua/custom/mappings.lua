@@ -27,6 +27,88 @@ M.general = {
     -- back
     ["<C-o>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N><C-o>", true, true, true), "Escape and go back" },
 
+    ["<A-x>"] = {
+      vim.api.nvim_replace_termcodes(
+        '<C-\\><C-N>:lua vim.cmd("b" .. require("nvchad.tabufline").bufilter()[1]) <cr>',
+        true,
+        true,
+        true
+      ),
+      "Escape and go to buffer",
+    },
+    ["<A-c>"] = {
+      vim.api.nvim_replace_termcodes(
+        '<C-\\><C-N>:lua vim.cmd("b" .. require("nvchad.tabufline").bufilter()[2]) <cr>',
+        true,
+        true,
+        true
+      ),
+      "Escape and go to buffer",
+    },
+    ["<A-v>"] = {
+      vim.api.nvim_replace_termcodes(
+        '<C-\\><C-N>:lua vim.cmd("b" .. require("nvchad.tabufline").bufilter()[3]) <cr>',
+        true,
+        true,
+        true
+      ),
+      "Escape and go to buffer",
+    },
+    ["<A-s>"] = {
+      vim.api.nvim_replace_termcodes(
+        '<C-\\><C-N>:lua vim.cmd("b" .. require("nvchad.tabufline").bufilter()[4]) <cr>',
+        true,
+        true,
+        true
+      ),
+      "Escape and go to buffer",
+    },
+    ["<A-d>"] = {
+      vim.api.nvim_replace_termcodes(
+        '<C-\\><C-N>:lua vim.cmd("b" .. require("nvchad.tabufline").bufilter()[5]) <cr>',
+        true,
+        true,
+        true
+      ),
+      "Escape and go to buffer",
+    },
+    ["<A-f>"] = {
+      vim.api.nvim_replace_termcodes(
+        '<C-\\><C-N>:lua vim.cmd("b" .. require("nvchad.tabufline").bufilter()[6]) <cr>',
+        true,
+        true,
+        true
+      ),
+      "Escape and go to buffer",
+    },
+    ["<A-w>"] = {
+      vim.api.nvim_replace_termcodes(
+        '<C-\\><C-N>:lua vim.cmd("b" .. require("nvchad.tabufline").bufilter()[7]) <cr>',
+        true,
+        true,
+        true
+      ),
+      "Escape and go to buffer",
+    },
+    ["<A-e>"] = {
+      vim.api.nvim_replace_termcodes(
+        '<C-\\><C-N>:lua vim.cmd("b" .. require("nvchad.tabufline").bufilter()[8]) <cr>',
+        true,
+        true,
+        true
+      ),
+      "Escape and go to buffer",
+    },
+    ["<A-r>"] = {
+      vim.api.nvim_replace_termcodes(
+        '<C-\\><C-N>:lua vim.cmd("b" .. require("nvchad.tabufline").bufilter()[9]) <cr>',
+        true,
+        true,
+        true
+      ),
+      "Escape and go to buffer",
+    },
+
     -- harpoon
     ["<A-y>"] = {
       vim.api.nvim_replace_termcodes(

@@ -15,13 +15,8 @@ M.general = {
   t = {
     ["<C-x>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true), "Escape terminal mode" },
 
-    -- tabs
-    ["<A-1>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:1tabnext<CR>", true, true, true), "Escape and go to tab" },
-    ["<A-2>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:2tabnext<CR>", true, true, true), "Escape and go to tab" },
-    ["<A-3>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:3tabnext<CR>", true, true, true), "Escape and go to tab" },
-    ["<A-4>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:4tabnext<CR>", true, true, true), "Escape and go to tab" },
-    ["<A-5>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:5tabnext<CR>", true, true, true), "Escape and go to tab" },
-    ["<A-6>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:6tabnext<CR>", true, true, true), "Escape and go to tab" },
+    ["<A-q>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:tabprevious<CR>", true, true, true), "Escape and go to tab" },
+    ["<A-t>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:tabnext<CR>", true, true, true), "Escape and go to tab" },
 
     -- switch between windows
     ["<C-j>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>h", true, true, true), "Escape and go to window" },
@@ -91,18 +86,18 @@ M.general = {
     ["<leader>sn"] = { "<cmd> Telescope notify <CR>" },
     ["<leader>sb"] = { "<cmd> Telescope buffers <CR>" },
 
-    ["<A-1>"] = { "<cmd> 1tabnext<CR>", "Go to tab" },
-    ["<A-2>"] = { "<cmd> 2tabnext<CR>", "Go to tab" },
-    ["<A-3>"] = { "<cmd> 3tabnext<CR>", "Go to tab" },
-    ["<A-4>"] = { "<cmd> 4tabnext<CR>", "Go to tab" },
-    ["<A-5>"] = { "<cmd> 5tabnext<CR>", "Go to tab" },
-    ["<A-6>"] = { "<cmd> 6tabnext<CR>", "Go to tab" },
+    ["<A-x>"] = { function () vim.cmd("b" .. require("nvchad.tabufline").bufilter()[1]) end, "Go to buffer 1" },
+    ["<A-c>"] = { function () vim.cmd("b" .. require("nvchad.tabufline").bufilter()[2]) end, "Go to buffer 2" },
+    ["<A-v>"] = { function () vim.cmd("b" .. require("nvchad.tabufline").bufilter()[3]) end, "Go to buffer 3" },
+    ["<A-s>"] = { function () vim.cmd("b" .. require("nvchad.tabufline").bufilter()[4]) end, "Go to buffer 4" },
+    ["<A-d>"] = { function () vim.cmd("b" .. require("nvchad.tabufline").bufilter()[5]) end, "Go to buffer 5" },
+    ["<A-f>"] = { function () vim.cmd("b" .. require("nvchad.tabufline").bufilter()[6]) end, "Go to buffer 6" },
+    ["<A-w>"] = { function () vim.cmd("b" .. require("nvchad.tabufline").bufilter()[7]) end, "Go to buffer 4" },
+    ["<A-e>"] = { function () vim.cmd("b" .. require("nvchad.tabufline").bufilter()[8]) end, "Go to buffer 5" },
+    ["<A-r>"] = { function () vim.cmd("b" .. require("nvchad.tabufline").bufilter()[9]) end, "Go to buffer 6" },
 
-    -- window resize
-    ["<A-=>"] = { "<cmd>vertical resize +5<cr>", "make the window biger vertically" },
-    ["<A-->"] = { "<cmd>vertical resize -5<cr>", "make the window smaller vertically" },
-    ["<A-+>"] = { "<cmd>horizontal  resize +2<cr>", "make the window biger horizontally" },
-    ["<A-_>"] = { "<cmd>horizontal  resize -2<cr>", "make the window smaller horizontally" },
+    ["<A-q>"] = { "<cmd> tabprevious<CR>", "Go to prev tab" },
+    ["<A-t>"] = { "<cmd> tabnext<CR>", "Go to next tab" },
 
     -- harpoon
     ["<A-h>"] = { "<cmd> lua require('harpoon.mark').add_file() <cr>" },

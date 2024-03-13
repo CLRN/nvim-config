@@ -93,6 +93,14 @@ M.tabufline = {
       end,
       "Close buffer",
     },
+
+    -- close all buffers except current
+    ["<leader>X"] = {
+      function()
+        require("nvchad.tabufline").closeOtherBufs()
+      end,
+      "Close all except current buffer",
+    },
   },
 }
 

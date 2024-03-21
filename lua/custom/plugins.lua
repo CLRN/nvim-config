@@ -212,8 +212,8 @@ local plugins = {
     "Civitasv/cmake-tools.nvim",
     commit = "aba5b80",
     ft = { "cmake", "cpp" },
-    enabled = function ()
-      return vim.fn.filewritable("CMakeLists.txt") == 1
+    enabled = function()
+      return vim.fn.filewritable "CMakeLists.txt" == 1
     end,
     config = function(_, opts)
       local gen_opts_bb = {
@@ -261,7 +261,7 @@ local plugins = {
         console = "integratedTerminal",
       }
 
-      local is_bb = vim.fn.executable("/opt/bb/bin/g++") == 1
+      local is_bb = vim.fn.executable "/opt/bb/bin/g++" == 1
 
       require("cmake-tools").setup {
         cmake_command = "cmake", -- this is used to specify cmake command path
@@ -378,16 +378,7 @@ local plugins = {
       }
     end,
   },
-  {
-    "glacambre/firenvim",
 
-    -- Lazy load firenvim
-    -- Explanation: https://github.com/folke/lazy.nvim/discussions/463#discussioncomment-4819297
-    lazy = not vim.g.started_by_firenvim,
-    build = function()
-      vim.fn["firenvim#install"](0)
-    end,
-  },
   {
     "junegunn/fzf",
     ft = { "cmake", "cpp", "python", "lua" },
@@ -395,6 +386,7 @@ local plugins = {
       vim.fn["fzf#install"]()
     end,
   },
+
   {
     lazy = false,
     "rcarriga/nvim-notify",
@@ -407,6 +399,7 @@ local plugins = {
       vim.notify = require "notify"
     end,
   },
+
   {
     ft = { "javascript", "typescript", "javascriptreact", "typescriptreact", "json", "yaml", "lua", "cmake" },
     "FotiadisM/tabset.nvim",
@@ -667,8 +660,18 @@ local plugins = {
             vim.keymap.set("n", "<localleader>l", "<Cmd>Leet list<CR>", { buffer = bufnr, desc = "LeetCode list" })
             vim.keymap.set("n", "<localleader>r", "<Cmd>Leet run<CR>", { buffer = bufnr, desc = "LeetCode run" })
             vim.keymap.set("n", "<localleader>s", "<Cmd>Leet submit<CR>", { buffer = bufnr, desc = "LeetCode submit" })
-            vim.keymap.set("n", "<localleader>i", "<Cmd>Leet info<CR>", { buffer = bufnr, desc = "LeetCode information" })
-            vim.keymap.set("n", "<localleader>d", "<Cmd>Leet desc<CR>", { buffer = bufnr, desc = "LeetCode description" })
+            vim.keymap.set(
+              "n",
+              "<localleader>i",
+              "<Cmd>Leet info<CR>",
+              { buffer = bufnr, desc = "LeetCode information" }
+            )
+            vim.keymap.set(
+              "n",
+              "<localleader>d",
+              "<Cmd>Leet desc<CR>",
+              { buffer = bufnr, desc = "LeetCode description" }
+            )
           end,
           -- For question description
           function(q)
@@ -684,7 +687,41 @@ local plugins = {
     },
   },
 
+  {
+    "aaronhallaert/advanced-git-search.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("telescope").load_extension "advanced_git_search"
+      vim.api.nvim_set_keymap(
+        "n",
+        "<leader>sg",
+        "<cmd>AdvancedGitSearch<cr>",
+        { noremap = true, silent = true, desc = "AdvancedGitSearch" }
+      )
+      vim.api.nvim_set_keymap(
+        "v",
+        "<leader>sg",
+        "<cmd>'<,'>AdvancedGitSearch diff_commit_line<cr>",
+        { noremap = false, silent = true, desc = "Search file commits (advanced)" }
+      )
+    end,
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+      "tpope/vim-fugitive",
+      "tpope/vim-rhubarb",
+    },
+  },
 
+  -- {
+  --   "glacambre/firenvim",
+  --
+  --   -- Lazy load firenvim
+  --   -- Explanation: https://github.com/folke/lazy.nvim/discussions/463#discussioncomment-4819297
+  --   lazy = not vim.g.started_by_firenvim,
+  --   build = function()
+  --     vim.fn["firenvim#install"](0)
+  --   end,
+  -- },
   -- {
   --   "benlubas/molten-nvim",
   --   build = function()

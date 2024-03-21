@@ -49,7 +49,7 @@ local options = {
     },
   },
 
-  extensions_list = { "themes", "terms", "fzf", "ui-select" },
+  extensions_list = { "themes", "terms", "fzf", "ui-select", "advanced_git_search" },
   extensions = {
     fzf = {
       fuzzy = true,

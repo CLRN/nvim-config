@@ -263,6 +263,7 @@ M.cmake_tools = {
     ["<leader>cb"] = { "<cmd> CMakeBuild <CR>" },
     ["<leader>cd"] = { "<cmd> CMakeDebug <CR>" },
     ["<leader>cr"] = { "<cmd> CMakeRun <CR>" },
+    ["<leader>ct"] = { "<cmd> CMakeRunTest <CR>" },
     ["<leader>cs"] = { "<cmd> CMakeStopExecutor <CR>" },
     ["<leader>ctb"] = {
       function()

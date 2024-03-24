@@ -640,7 +640,15 @@ local plugins = {
       arg = "lc",
       injector = {
         ["cpp"] = {
-          before = { "#include <bits/stdc++.h>", "using namespace std;" },
+          before = {
+            "#include <vector>",
+            "#include <string>",
+            "#include <map>",
+            "#include <unordered_map>",
+            "#include <algorithm>",
+            "#include <iostream>",
+            "using namespace std;",
+          },
         },
       },
       description = {
@@ -671,6 +679,12 @@ local plugins = {
               "<localleader>d",
               "<Cmd>Leet desc<CR>",
               { buffer = bufnr, desc = "LeetCode description" }
+            )
+            vim.keymap.set(
+              "n",
+              "<localleader>c",
+              "<Cmd>Leet console<CR>",
+              { buffer = bufnr, desc = "LeetCode console" }
             )
           end,
           -- For question description

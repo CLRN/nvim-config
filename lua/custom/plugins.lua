@@ -648,6 +648,7 @@ local plugins = {
             "#include <algorithm>",
             "#include <iostream>",
             "using namespace std;",
+            "auto init_ = [](){ ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL); return 0; }();",
           },
         },
       },

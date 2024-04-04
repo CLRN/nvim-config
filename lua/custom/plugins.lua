@@ -226,7 +226,7 @@ local plugins = {
         "-DCMAKE_BUILD_TYPE=Debug",
         "-DBUILDID=dev",
         "-DCMAKE_OUTPUT_DIR=.",
-        "-GNinja",
+        "-GUnix Makefiles",
       }
 
       local gen_opts_clang = {

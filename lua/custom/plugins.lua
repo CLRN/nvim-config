@@ -541,6 +541,7 @@ local plugins = {
     "nvim-neorg/neorg",
     event = "VeryLazy",
     build = ":Neorg sync-parsers",
+    commit = "28cbafb",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       vim.filetype.add {

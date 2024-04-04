@@ -669,6 +669,7 @@ local plugins = {
             vim.keymap.set("n", "<localleader>l", "<Cmd>Leet list<CR>", { buffer = bufnr, desc = "LeetCode list" })
             vim.keymap.set("n", "<localleader>r", "<Cmd>Leet run<CR>", { buffer = bufnr, desc = "LeetCode run" })
             vim.keymap.set("n", "<localleader>s", "<Cmd>Leet submit<CR>", { buffer = bufnr, desc = "LeetCode submit" })
+            vim.keymap.set("n", "<localleader>o", "<Cmd>Leet open<CR>", { buffer = bufnr, desc = "LeetCode open" })
             vim.keymap.set(
               "n",
               "<localleader>i",

@@ -388,19 +388,6 @@ local plugins = {
   },
 
   {
-    lazy = false,
-    "rcarriga/nvim-notify",
-    enabled = function()
-      vim.fn.system "bbhost -q -w localhost sn2 fcldev"
-      return vim.v.shell_error ~= 0
-    end,
-    config = function()
-      require("telescope").load_extension "notify"
-      vim.notify = require "notify"
-    end,
-  },
-
-  {
     ft = { "javascript", "typescript", "javascriptreact", "typescriptreact", "json", "yaml", "lua", "cmake" },
     "FotiadisM/tabset.nvim",
     config = function()
@@ -533,7 +520,6 @@ local plugins = {
     end,
     dependencies = {
       "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
     },
   },
 
@@ -799,6 +785,18 @@ local plugins = {
   --     require("vgit").setup()
   --   end,
   -- }
+  -- {
+  --   lazy = false,
+  --   "rcarriga/nvim-notify",
+  --   enabled = function()
+  --     vim.fn.system "bbhost -q -w localhost sn2 fcldev"
+  --     return vim.v.shell_error ~= 0
+  --   end,
+  --   config = function()
+  --     require("telescope").load_extension "notify"
+  --     vim.notify = require "notify"
+  --   end,
+  -- },
 }
 
 return plugins

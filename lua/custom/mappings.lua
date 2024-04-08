@@ -200,7 +200,11 @@ M.general = {
 
     -- misc
     ["<leader>pf"] = { "<cmd> lua print(vim.fn.expand('%')) <CR>" },
-    --
+
+    ["<leader>ne"] = { "<cmd> NoiceErrors <CR>", "NoiceErrors" },
+    ["<leader>nh"] = { "<cmd> NoiceHistory <CR>", "NoiceHistory" },
+    ["<leader>nl"] = { "<cmd> NoiceLast <CR>", "NoiceLast" },
+    ["<leader>nt"] = { "<cmd> NoiceTelescope <CR>", "NoiceTelescope" },
   },
   v = {
     -- [">"] = { ">gv", "indent"},

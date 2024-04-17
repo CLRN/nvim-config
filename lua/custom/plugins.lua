@@ -268,7 +268,7 @@ local plugins = {
         cmake_regenerate_on_save = true, -- auto generate when save CMakeLists.txt
         --
         cmake_generate_options = is_bb and gen_opts_bb or gen_opts_clang, -- this will be passed when invoke `CMakeGenerate`
-        cmake_build_options = { "-j", "6" }, -- this will be passed when invoke `CMakeBuild`
+        cmake_build_options = { "-j", "12" }, -- this will be passed when invoke `CMakeBuild`
         cmake_build_directory = "cmake-build/${variant:buildType}", -- this is used to specify generate directory for cmake, allows macro expansion
         cmake_soft_link_compile_commands = false, -- this will automatically make a soft link from compile commands file to project root dir
         cmake_compile_commands_from_lsp = true,

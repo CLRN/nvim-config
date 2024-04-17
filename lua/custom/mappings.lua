@@ -168,6 +168,7 @@ M.general = {
     ["<leader>sn"] = { "<cmd> Telescope notify <CR>" },
     ["<leader>sb"] = { "<cmd> Telescope buffers <CR>" },
     ["<leader>sj"] = { "<cmd> Telescope jumplist <CR>" },
+    ["<leader>ss"] = { "<cmd> Telescope lsp_workspace_symbols <CR>" },
 
     ["<A-x>"] = { function () vim.cmd("b" .. require("nvchad.tabufline").bufilter()[1]) end, "Go to buffer 1" },
     ["<A-c>"] = { function () vim.cmd("b" .. require("nvchad.tabufline").bufilter()[2]) end, "Go to buffer 2" },

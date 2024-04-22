@@ -117,6 +117,12 @@ local plugins = {
         },
       }
 
+      dap.adapters.cppdbg_rosetta = {
+        id = "cppdbg",
+        type = "executable",
+        command = vim.fn.expand('$HOME/.config/nvim/dap_rosetta'),
+      }
+
       dap.adapters.cppdbg = {
         id = "cppdbg",
         type = "executable",
@@ -125,14 +131,24 @@ local plugins = {
 
       dap.configurations.cpp = {
         {
-          name = "Launch file",
+          name = "Current CMake target(gdb)",
           type = "cppdbg",
           request = "launch",
           program = function()
+            local status, cmake = pcall(require, "cmake-tools")
+            if status then
+              local target = cmake.get_launch_target()
+              if target then
+                return cmake.get_launch_path(target) .. target
+              end
+            end
+
             return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
           end,
           cwd = "${workspaceFolder}",
           stopAtEntry = true,
+          runInTerminal = true,
+          console = "integratedTerminal",
           setupCommands = {
             {
               text = "-enable-pretty-printing",
@@ -240,7 +256,7 @@ local plugins = {
         name = "cpp",
         type = "cppdbg",
         request = "launch",
-        stopOnEntry = false,
+        stopOnEntry = true,
         runInTerminal = true,
         console = "integratedTerminal",
         setupCommands = {
@@ -262,6 +278,13 @@ local plugins = {
       }
 
       local is_bb = vim.fn.executable "/opt/bb/bin/g++" == 1
+      local dap = dap_lldb
+      if is_bb then
+        if #vim.fn.system("ps a -q 1 | grep rosetta") > 0 then
+          dap_gdb.type = "cppdbg_rosetta"
+        end
+        dap = dap_gdb
+      end
 
       require("cmake-tools").setup {
         cmake_command = "cmake", -- this is used to specify cmake command path
@@ -277,7 +300,7 @@ local plugins = {
           short = { show = true }, -- whether to show short message
           long = { show = true, max_length = 40 }, -- whether to show long message
         },
-        cmake_dap_configuration = is_bb and dap_gdb or dap_lldb,
+        cmake_dap_configuration = dap,
         cmake_executor = { -- executor to use
           name = "quickfix", -- name of the executor
           opts = {}, -- the options the executor will get, possible values depend on the executor type. See `default_opts` for possible values.

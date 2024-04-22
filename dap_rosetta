@@ -1,0 +1,134 @@
+#!/usr/bin/env python3
+
+import asyncio
+import json
+import logging
+import socket
+import sys
+from contextlib import closing
+
+EXECUTABLE = "OpenDebugAD7"
+
+
+class EmptyRead(Exception):
+    pass
+
+
+def find_free_port():
+    with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:
+        s.bind(("", 0))
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        return s.getsockname()[1]
+
+
+async def connect_stdin_stdout():
+    loop = asyncio.get_event_loop()
+    reader = asyncio.StreamReader()
+    protocol = asyncio.StreamReaderProtocol(reader)
+    await loop.connect_read_pipe(lambda: protocol, sys.stdin)
+    w_transport, w_protocol = await loop.connect_write_pipe(asyncio.streams.FlowControlMixin, sys.stdout)
+    writer = asyncio.StreamWriter(w_transport, w_protocol, reader, loop)
+    return reader, writer
+
+
+async def read_msg(stream):
+    while True:
+        line = await stream.readline()
+        if not line:
+            raise EmptyRead()
+
+        line = line.strip()
+        if not line:
+            continue
+
+        await stream.readline()
+
+        logging.debug(f"{line=}")
+        parts = line.split(b": ")
+        if parts[0] == b"Content-Length":
+            size = int(parts[1])
+            logging.debug(f"Reading {size=}")
+            return json.loads(await stream.read(size))
+
+
+def serialize_msg(msg: dict):
+    body = json.dumps(msg).encode()
+    return f"Content-Length: {len(body)}\r\n\r\n".encode() + body
+
+
+async def main():
+    logging.basicConfig(filename="/tmp/gdb.log", level=logging.INFO, filemode="w", datefmt="%Y-%m-%dT%H:%M:%S%z")
+
+    args = sys.argv[1:]
+    logging.info("-----------------------------------------------------------------")
+
+    tty = await asyncio.create_subprocess_shell("tty", stdout=asyncio.subprocess.PIPE)
+    assert tty.stdout
+    tty = (await tty.stdout.readline()).decode().strip()
+
+    logging.info(f"{args=}, {tty=}")
+
+    gdb = await asyncio.create_subprocess_exec(
+        EXECUTABLE, *args, stdin=asyncio.subprocess.PIPE, stdout=asyncio.subprocess.PIPE
+    )
+
+    reader, writer = await connect_stdin_stdout()
+
+    async def _reader():
+        assert gdb.stdout
+
+        while True:
+            msg = await read_msg(gdb.stdout)
+            logging.info(f">>> {json.dumps(msg)}")
+
+            writer.write(serialize_msg(msg))
+            await writer.drain()
+
+    async def _writer():
+        assert gdb.stdin
+
+        while True:
+            msg = await read_msg(reader)
+            logging.info(f"<<< {json.dumps(msg)}")
+
+            if msg.get("request_seq") == 0 and msg.get("command") == "runInTerminal":
+                logging.info(f"Started program: {msg['body']}")
+                continue
+
+            if msg.get("type") == "request" and msg.get("command") == "launch":
+                port = find_free_port()
+                msg["arguments"]["miDebuggerServerAddress"] = f"localhost:{port}"
+                msg["arguments"]["MIMode"] = "gdb"
+
+                args = msg["arguments"]
+                process_args = args.get("args", [])
+                launch_request = {
+                    "type": "request",
+                    "command": "runInTerminal",
+                    "arguments": {
+                        "kind": "integrated",
+                        "title": f"debugging {args['program']}",
+                        "cwd": args["cwd"],
+                        "args": [args["program"]] + process_args,
+                        "env": {"ROSETTA_DEBUGSERVER_PORT": f"{port}"},
+                    },
+                    "seq": 0,
+                }
+
+                logging.info(f"Launching: {args.get('program')} with {process_args}, {launch_request=}")
+                writer.write(serialize_msg(launch_request))
+                await writer.drain()
+
+            gdb.stdin.write(serialize_msg(msg))
+            await gdb.stdin.drain()
+
+    try:
+        await asyncio.gather(_reader(), _writer())
+    except EmptyRead:
+        logging.info("terminating normally")
+    except Exception:
+        logging.exception("failing")
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

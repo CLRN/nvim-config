@@ -49,14 +49,8 @@ local options = {
     },
   },
 
-  extensions_list = { "themes", "terms", "fzf", "ui-select", "advanced_git_search" },
+  extensions_list = { "themes", "terms", "ui-select", "advanced_git_search" },
   extensions = {
-    fzf = {
-      fuzzy = true,
-      override_generic_sorter = true,
-      override_file_sorter = true,
-      case_mode = "smart_case",
-    },
   },
 }
 

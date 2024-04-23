@@ -120,7 +120,7 @@ local plugins = {
       dap.adapters.cppdbg_rosetta = {
         id = "cppdbg",
         type = "executable",
-        command = vim.fn.expand('$HOME/.config/nvim/dap_rosetta'),
+        command = vim.fn.expand "$HOME/.config/nvim/dap_rosetta",
       }
 
       dap.adapters.cppdbg = {
@@ -275,12 +275,15 @@ local plugins = {
         stopOnEntry = false,
         runInTerminal = true,
         console = "integratedTerminal",
+        -- custom = true,
+        -- targetCreateCommands = { "gdb-remote localhost:1234", "target create /Users/skarnaukhov/home/git/jupyter.nvim/cmake-build/Debug/test" },
+        -- processCreateCommands = { },
       }
 
       local is_bb = vim.fn.executable "/opt/bb/bin/g++" == 1
       local dap = dap_lldb
       if is_bb then
-        if #vim.fn.system("ps a -q 1 | grep rosetta") > 0 then
+        if #vim.fn.system "ps a -q 1 | grep rosetta" > 0 then
           dap_gdb.type = "cppdbg_rosetta"
         end
         dap = dap_gdb
@@ -402,7 +405,7 @@ local plugins = {
     end,
   },
 
-    -- { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
+  -- { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
   -- {
   --   "junegunn/fzf",
   --   ft = { "cmake", "cpp", "python", "lua" },
@@ -664,7 +667,7 @@ local plugins = {
         },
       },
       description = {
-        position = "top",
+        position = "right",
       },
       console = {
         dir = "col",

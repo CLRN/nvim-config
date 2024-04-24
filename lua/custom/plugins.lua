@@ -256,13 +256,18 @@ local plugins = {
         name = "cpp",
         type = "cppdbg",
         request = "launch",
-        stopOnEntry = true,
+        stopOnEntry = false,
         runInTerminal = true,
         console = "integratedTerminal",
         setupCommands = {
           {
             text = "-enable-pretty-printing",
             description = "enable pretty printing",
+            ignoreFailures = false,
+          },
+          {
+            text = "handle SIGSEGV nostop noprint",
+            description = "ignore SIGSEGV caused by Rosetta",
             ignoreFailures = false,
           },
         },

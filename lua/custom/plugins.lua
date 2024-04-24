@@ -5,7 +5,7 @@ local plugins = {
 
   -- Override plugin definition options
   {
-    lazy = false,
+    event = "VeryLazy",
     "jose-elias-alvarez/null-ls.nvim",
     opts = function()
       return require "custom.configs.null-ls"
@@ -354,7 +354,7 @@ local plugins = {
     end,
   },
   {
-    lazy = false,
+    event = "VeryLazy",
     "kdheepak/lazygit.nvim",
     dependencies = {
       "nvim-telescope/telescope.nvim",
@@ -365,7 +365,7 @@ local plugins = {
     end,
   },
   {
-    lazy = false,
+    event = "VeryLazy",
     "ThePrimeagen/harpoon",
     dependencies = {
       "nvim-telescope/telescope.nvim",
@@ -376,15 +376,15 @@ local plugins = {
     end,
   },
   {
-    lazy = false,
+    event = "VeryLazy",
     "justinmk/vim-sneak",
   },
   {
-    lazy = false,
+    event = "VeryLazy",
     "tpope/vim-surround",
   },
   {
-    lazy = false,
+    event = "VeryLazy",
     "ojroques/nvim-osc52",
     config = function()
       local function copy(lines, _)
@@ -446,7 +446,7 @@ local plugins = {
   },
   {
     "nvim-lua/plenary.nvim",
-    lazy = false,
+    event = "VeryLazy",
     config = function()
       require "custom.teddy"
     end,

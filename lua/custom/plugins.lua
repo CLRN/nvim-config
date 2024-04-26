@@ -384,7 +384,7 @@ local plugins = {
     "tpope/vim-surround",
   },
   {
-    event = "VeryLazy",
+    lazy = false,
     "ojroques/nvim-osc52",
     config = function()
       local function copy(lines, _)

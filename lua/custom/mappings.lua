@@ -310,7 +310,7 @@ vim.keymap.set("v", "$", "g_", { remap = true })
 function GoToFileCol()
   -- grab current line and match it against the regexp
   local current_line = vim.api.nvim_get_current_line()
-  local file, line = current_line:match "(/[^:]+):([0-9]+)"
+  local file, line = current_line:match "(/?[^:]+):([0-9]+)"
 
   if not file then
     file, line = current_line:match 'File "(.+)", line ([0-9]+)'

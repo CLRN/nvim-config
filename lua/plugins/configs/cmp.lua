@@ -117,6 +117,7 @@ local options = {
     { name = "nvim_lua" },
     { name = "path" },
     { name = "calc" },
+    { name = "treesitter" },
   },
 }
 

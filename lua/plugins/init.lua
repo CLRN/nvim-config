@@ -185,6 +185,7 @@ local default_plugins = {
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-calc",
+        "ray-x/cmp-treesitter",
       },
     },
     opts = function()
@@ -234,7 +235,7 @@ local default_plugins = {
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-      "nvim-telescope/telescope-ui-select.nvim"
+      "nvim-telescope/telescope-ui-select.nvim",
     },
     cmd = "Telescope",
     init = function()

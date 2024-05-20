@@ -14,7 +14,7 @@ local formatting_style = {
   -- default fields order i.e completion word + item.kind + item.kind icons
   fields = field_arrangement[cmp_style] or { "abbr", "kind", "menu" },
 
-  format = function(_, item)
+  format = function(entry, item)
     local icons = require "nvchad.icons.lspkind"
     local icon = (cmp_ui.icons and icons[item.kind]) or ""
 
@@ -23,6 +23,12 @@ local formatting_style = {
       item.menu = cmp_ui.lspkind_text and "   (" .. item.kind .. ")" or ""
       item.kind = icon
     else
+      if entry.source.name == "calc" then
+        -- Get the custom icon for 'calc' source
+        -- Replace the kind glyph with the custom icon
+        item.kind = " 󰃬 "
+      end
+
       icon = cmp_ui.lspkind_text and (" " .. icon .. " ") or icon
       item.kind = string.format("%s %s", icon, cmp_ui.lspkind_text and item.kind or "")
     end
@@ -110,6 +116,7 @@ local options = {
     { name = "buffer" },
     { name = "nvim_lua" },
     { name = "path" },
+    { name = "calc" },
   },
 }
 

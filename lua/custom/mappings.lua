@@ -13,7 +13,7 @@ end
 
 M.general = {
   t = {
-    ["<C-x>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true), "Escape terminal mode" },
+    ["<C-x>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:redrawstatus<CR>", true, true, true), "Escape terminal mode" },
 
     ["<A-q>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:tabprevious<CR>", true, true, true), "Escape and go to tab" },
     ["<A-t>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:tabnext<CR>", true, true, true), "Escape and go to tab" },

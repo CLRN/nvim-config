@@ -9,6 +9,7 @@ require "custom.configs.firenvim"
 
 vim.opt.spelllang = "en_us"
 vim.opt.spell = false
+vim.opt.diffopt = "internal,filler,closeoff,vertical"
 
 local original = vim.fn.setqflist
 vim.fn.setqflist = function(list, action, what)

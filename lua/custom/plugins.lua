@@ -181,7 +181,7 @@ local plugins = {
 
       require("dap-python").setup(path)
       require("core.utils").load_mappings "dap_python"
-      require("dap.ext.vscode").load_launchjs(nil, {})
+      -- require("dap.ext.vscode").load_launchjs(nil, {})
       require("nvim-dap-virtual-text").setup(nil, {})
     end,
   },

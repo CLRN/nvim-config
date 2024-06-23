@@ -756,6 +756,23 @@ local plugins = {
     end
   },
 
+  {
+    "nvim-telescope/telescope-live-grep-args.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("telescope").load_extension "live_grep_args"
+
+      vim.api.nvim_set_keymap(
+        "n",
+        "<leader>fg",
+        ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>",
+        { noremap = true, silent = true, desc = "Ripgrep advanced search" }
+      )
+    end,
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+    },
+  },
   -- {
   --   "glacambre/firenvim",
   --

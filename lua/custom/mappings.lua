@@ -334,6 +334,6 @@ function GoToFileCol()
   end
 end
 
-vim.keymap.set({ "n", "t" }, "gf", GoToFileCol, { remap = true })
+vim.keymap.set({ "t" }, "<leader>gf", GoToFileCol, { remap = true })
 
 return M

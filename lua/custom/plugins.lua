@@ -776,6 +776,9 @@ local plugins = {
 
   {
     "tomasky/bookmarks.nvim",
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+    },
     event = "VeryLazy",
     config = function()
       require("bookmarks").setup {

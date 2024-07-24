@@ -239,7 +239,6 @@ local plugins = {
           .. (os.getenv "DISTRIBUTION_REFROOT" or "")
           .. "/opt/bb/share/plink/BBToolchain64.cmake",
         "-DCMAKE_INSTALL_LIBDIR=.",
-        "-DCMAKE_BUILD_TYPE=Debug",
         "-DBUILDID=dev",
         "-DCMAKE_OUTPUT_DIR=.",
         "-GUnix Makefiles",

@@ -264,11 +264,6 @@ local plugins = {
             description = "enable pretty printing",
             ignoreFailures = false,
           },
-          {
-            text = "handle SIGSEGV nostop noprint",
-            description = "ignore SIGSEGV caused by Rosetta",
-            ignoreFailures = false,
-          },
         },
       }
 
@@ -289,6 +284,11 @@ local plugins = {
       if is_bb then
         if #vim.fn.system "ps a -q 1 | grep rosetta" > 0 then
           dap_gdb.type = "cppdbg_rosetta"
+          table.insert(dap_gdb.setupCommands, {
+            text = "handle SIGSEGV nostop noprint",
+            description = "ignore SIGSEGV caused by Rosetta",
+            ignoreFailures = false,
+          })
         end
         dap = dap_gdb
       end

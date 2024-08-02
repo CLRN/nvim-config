@@ -811,6 +811,13 @@ local plugins = {
       )
     end,
   },
+  {
+    "CLRN/gdb-disasm.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("gdbdisasm").setup{}
+    end
+  }
   -- {
   --   "glacambre/firenvim",
   --

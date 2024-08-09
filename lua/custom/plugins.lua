@@ -811,11 +811,33 @@ local plugins = {
       )
     end,
   },
+
   {
     "CLRN/gdb-disasm.nvim",
     event = "VeryLazy",
     config = function()
       require("gdbdisasm").setup{}
+    end
+  },
+
+  {
+    "OXY2DEV/markview.nvim",
+    ft = "markdown",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons"
+    },
+    config = function()
+      require("markview").setup({
+        modes = { "n", "no", "c" },
+        hybrid_modes = { "n" },
+        callbacks = {
+          on_enable = function (_, win)
+            vim.wo[win].conceallevel = 2;
+            vim.wo[win].conecalcursor = "c";
+          end
+        }
+      })
     end
   }
   -- {

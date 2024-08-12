@@ -226,7 +226,6 @@ local plugins = {
   },
   {
     "Civitasv/cmake-tools.nvim",
-    commit = "aba5b80",
     ft = { "cmake", "cpp" },
     enabled = function()
       return vim.fn.filewritable "CMakeLists.txt" == 1

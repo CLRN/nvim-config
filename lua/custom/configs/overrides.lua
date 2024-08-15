@@ -56,6 +56,9 @@ M.mason = {
     -- shell
     "beautysh",
     "curlylint",
+
+    -- spell checks
+    "typos-lsp",
   },
 }
 

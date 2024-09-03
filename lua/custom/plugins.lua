@@ -334,7 +334,7 @@ local plugins = {
             -- Window handling
             single_terminal_per_instance = true, -- Single viewport, multiple windows
             single_terminal_per_tab = true, -- Single viewport per tab
-            keep_terminal_static_location = true, -- Static location of the viewport if avialable
+            keep_terminal_static_location = true, -- Static location of the viewport if available
 
             -- Running Tasks
             start_insert_in_launch_task = false, -- If you want to enter terminal with :startinsert upon using :CMakeRun

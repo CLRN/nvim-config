@@ -225,7 +225,7 @@ local plugins = {
     end,
   },
   {
-    "Civitasv/cmake-tools.nvim",
+    "CLRN/cmake-tools.nvim",
     ft = { "cmake", "cpp" },
     enabled = function()
       return vim.fn.filewritable "CMakeLists.txt" == 1
@@ -815,8 +815,8 @@ local plugins = {
     "CLRN/gdb-disasm.nvim",
     event = "VeryLazy",
     config = function()
-      require("gdbdisasm").setup{}
-    end
+      require("gdbdisasm").setup {}
+    end,
   },
 
   {
@@ -824,21 +824,21 @@ local plugins = {
     ft = "markdown",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
-      "nvim-tree/nvim-web-devicons"
+      "nvim-tree/nvim-web-devicons",
     },
     config = function()
-      require("markview").setup({
+      require("markview").setup {
         modes = { "n", "no", "c" },
         hybrid_modes = { "n" },
         callbacks = {
-          on_enable = function (_, win)
-            vim.wo[win].conceallevel = 2;
-            vim.wo[win].conecalcursor = "c";
-          end
-        }
-      })
-    end
-  }
+          on_enable = function(_, win)
+            vim.wo[win].conceallevel = 2
+            vim.wo[win].conecalcursor = "c"
+          end,
+        },
+      }
+    end,
+  },
   -- {
   --   "glacambre/firenvim",
   --

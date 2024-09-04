@@ -17,6 +17,7 @@ M.treesitter = {
     "yaml",
     "cmake",
     "cpp",
+    "asm",
   },
   indent = {
     enable = true,

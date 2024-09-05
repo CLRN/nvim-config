@@ -324,7 +324,14 @@ M.dap_python = {
 M.cmake_tools = {
   plugin = false,
   n = {
-    ["<leader>cb"] = { "<cmd> CMakeBuild <CR>" },
+    ["<leader>cb"] = {
+      function()
+        require("cmake-tools").build({}, function()
+          require("gdbdisasm").on_build_completed()
+        end)
+      end,
+      "Build target",
+    },
     ["<leader>cd"] = { "<cmd> CMakeDebug <CR>" },
     ["<leader>cr"] = { "<cmd> CMakeRun <CR>" },
     ["<leader>cc"] = { "<cmd> CMakeRunTest <CR>" },

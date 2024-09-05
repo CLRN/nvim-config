@@ -13,9 +13,15 @@ end
 
 M.general = {
   t = {
-    ["<C-x>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:redrawstatus<CR>", true, true, true), "Escape terminal mode" },
+    ["<C-x>"] = {
+      vim.api.nvim_replace_termcodes("<C-\\><C-N>:redrawstatus<CR>", true, true, true),
+      "Escape terminal mode",
+    },
 
-    ["<A-q>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:tabprevious<CR>", true, true, true), "Escape and go to tab" },
+    ["<A-q>"] = {
+      vim.api.nvim_replace_termcodes("<C-\\><C-N>:tabprevious<CR>", true, true, true),
+      "Escape and go to tab",
+    },
     ["<A-t>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:tabnext<CR>", true, true, true), "Escape and go to tab" },
 
     -- switch between windows
@@ -171,15 +177,60 @@ M.general = {
     ["<leader>ss"] = { "<cmd> Telescope lsp_workspace_symbols <CR>" },
     ["<leader>sd"] = { "<cmd> Telescope diagnostics <CR>" },
 
-    ["<A-x>"] = { function () vim.cmd("b" .. require("nvchad.tabufline").bufilter()[1]) end, "Go to buffer 1" },
-    ["<A-c>"] = { function () vim.cmd("b" .. require("nvchad.tabufline").bufilter()[2]) end, "Go to buffer 2" },
-    ["<A-v>"] = { function () vim.cmd("b" .. require("nvchad.tabufline").bufilter()[3]) end, "Go to buffer 3" },
-    ["<A-s>"] = { function () vim.cmd("b" .. require("nvchad.tabufline").bufilter()[4]) end, "Go to buffer 4" },
-    ["<A-d>"] = { function () vim.cmd("b" .. require("nvchad.tabufline").bufilter()[5]) end, "Go to buffer 5" },
-    ["<A-f>"] = { function () vim.cmd("b" .. require("nvchad.tabufline").bufilter()[6]) end, "Go to buffer 6" },
-    ["<A-w>"] = { function () vim.cmd("b" .. require("nvchad.tabufline").bufilter()[7]) end, "Go to buffer 4" },
-    ["<A-e>"] = { function () vim.cmd("b" .. require("nvchad.tabufline").bufilter()[8]) end, "Go to buffer 5" },
-    ["<A-r>"] = { function () vim.cmd("b" .. require("nvchad.tabufline").bufilter()[9]) end, "Go to buffer 6" },
+    ["<A-x>"] = {
+      function()
+        vim.cmd("b" .. require("nvchad.tabufline").bufilter()[1])
+      end,
+      "Go to buffer 1",
+    },
+    ["<A-c>"] = {
+      function()
+        vim.cmd("b" .. require("nvchad.tabufline").bufilter()[2])
+      end,
+      "Go to buffer 2",
+    },
+    ["<A-v>"] = {
+      function()
+        vim.cmd("b" .. require("nvchad.tabufline").bufilter()[3])
+      end,
+      "Go to buffer 3",
+    },
+    ["<A-s>"] = {
+      function()
+        vim.cmd("b" .. require("nvchad.tabufline").bufilter()[4])
+      end,
+      "Go to buffer 4",
+    },
+    ["<A-d>"] = {
+      function()
+        vim.cmd("b" .. require("nvchad.tabufline").bufilter()[5])
+      end,
+      "Go to buffer 5",
+    },
+    ["<A-f>"] = {
+      function()
+        vim.cmd("b" .. require("nvchad.tabufline").bufilter()[6])
+      end,
+      "Go to buffer 6",
+    },
+    ["<A-w>"] = {
+      function()
+        vim.cmd("b" .. require("nvchad.tabufline").bufilter()[7])
+      end,
+      "Go to buffer 4",
+    },
+    ["<A-e>"] = {
+      function()
+        vim.cmd("b" .. require("nvchad.tabufline").bufilter()[8])
+      end,
+      "Go to buffer 5",
+    },
+    ["<A-r>"] = {
+      function()
+        vim.cmd("b" .. require("nvchad.tabufline").bufilter()[9])
+      end,
+      "Go to buffer 6",
+    },
 
     ["<A-q>"] = { "<cmd> tabprevious<CR>", "Go to prev tab" },
     ["<A-t>"] = { "<cmd> tabnext<CR>", "Go to next tab" },
@@ -221,10 +272,12 @@ M.dap = {
   },
   n = {
     ["<leader>db"] = { "<cmd> DapToggleBreakpoint <CR>" },
-    ["<leader>dc"] = { function()
-      local input = vim.fn.input "condition: "
-      require("dap").toggle_breakpoint(input)
-    end},
+    ["<leader>dc"] = {
+      function()
+        local input = vim.fn.input "condition: "
+        require("dap").toggle_breakpoint(input)
+      end,
+    },
     ["<leader>du"] = { "<cmd> lua require('dapui').toggle() <CR>" },
     ["<leader>dr"] = { "<cmd> lua require('dapui').float_element('repl') <CR>" },
     ["<leader>de"] = { "<cmd> lua require('dapui').eval() <CR>" },
@@ -235,22 +288,26 @@ M.dap = {
     ["<leader>pi"] = { "<cmd> PyrightOrganizeImports <CR>" },
     ["<leader>pp"] = { "<cmd> PyrightSetPythonPath " .. (vim.env.VIRTUAL_ENV or "") .. " <CR>" },
 
-    ["<F5>"] = {function ()
-      require("dap").step_out()
-    end},
-    ["<F8>"] = {"<cmd> DapStepOver <CR>"},
-    ["<F7>"] = {"<cmd> DapStepInto <CR>"},
-    ["<F9>"] = {function()
-      -- (Re-)reads launch.json if present
-      pcall(vim.cmd, "wa")
-      if vim.fn.filereadable(".vscode/launch.json") then
-        local vscode = require("dap.ext.vscode")
-        -- pcall(vscode.load_launchjs, nil, { cpptools = { "c", "cpp" } })
-      end
-      require("dap").continue()
-    end},
-    ["<F4>"] = {"<cmd> DapTerminate <CR>"},
-  }
+    ["<F5>"] = {
+      function()
+        require("dap").step_out()
+      end,
+    },
+    ["<F8>"] = { "<cmd> DapStepOver <CR>" },
+    ["<F7>"] = { "<cmd> DapStepInto <CR>" },
+    ["<F9>"] = {
+      function()
+        -- (Re-)reads launch.json if present
+        pcall(vim.cmd, "wa")
+        if vim.fn.filereadable ".vscode/launch.json" then
+          local vscode = require "dap.ext.vscode"
+          -- pcall(vscode.load_launchjs, nil, { cpptools = { "c", "cpp" } })
+        end
+        require("dap").continue()
+      end,
+    },
+    ["<F4>"] = { "<cmd> DapTerminate <CR>" },
+  },
 }
 
 M.dap_python = {

@@ -332,11 +332,11 @@ M.cmake_tools = {
       end,
       "Build target",
     },
-    ["<leader>cd"] = { "<cmd> CMakeDebug <CR>" },
-    ["<leader>cr"] = { "<cmd> CMakeRun <CR>" },
-    ["<leader>cc"] = { "<cmd> CMakeRunTest <CR>" },
-    ["<leader>cs"] = { "<cmd> CMakeStopExecutor <CR>" },
-    ["<leader>cts"] = { "<cmd> CMakeTargetSettings <CR>" },
+    ["<leader>cd"] = { "<cmd> CMakeDebug <CR>", "Debug current target" },
+    ["<leader>cr"] = { "<cmd> CMakeRun <CR>", "Run current target" },
+    ["<leader>cc"] = { "<cmd> CMakeRunTest <CR>", "Run ctest" },
+    ["<leader>cs"] = { "<cmd> CMakeStopExecutor <CR>", "Stop build" },
+    ["<leader>cts"] = { "<cmd> CMakeTargetSettings <CR>", "Set target settings" },
     ["<leader>ctb"] = {
       function()
         require("cmake-tools").select_build_target(function()
@@ -353,6 +353,7 @@ M.cmake_tools = {
       end,
       "Select launch target",
     },
+    ["<leader>cpb"] = { "<cmd> CMakeSelectBuildType <CR>", "Select build type" },
   },
 }
 -- more keybinds!

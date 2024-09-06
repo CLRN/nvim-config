@@ -814,13 +814,21 @@ local plugins = {
   {
     "CLRN/gdb-disasm.nvim",
     event = "VeryLazy",
+    enabled = function()
+      return vim.fn.filewritable "CMakeLists.txt" == 1
+    end,
     config = function()
       local disasm = require "gdbdisasm"
       disasm.setup {}
 
-      local target = require("cmake-tools").get_build_target()
+      local status, cmake = pcall(require, "cmake-tools")
+      if not status then
+        return
+      end
+
+      local target = cmake.get_build_target()
       if target then
-        local path = require("cmake-tools").get_build_path(target) .. target
+        local path = cmake.get_build_path(target) .. target
         require("gdbdisasm").set_binary_path(path)
       end
 

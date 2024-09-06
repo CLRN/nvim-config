@@ -815,7 +815,22 @@ local plugins = {
     "CLRN/gdb-disasm.nvim",
     event = "VeryLazy",
     config = function()
-      require("gdbdisasm").setup {}
+      local disasm = require "gdbdisasm"
+      disasm.setup {}
+
+      local target = require("cmake-tools").get_build_target()
+      if target then
+        local path = require("cmake-tools").get_build_path(target) .. target
+        require("gdbdisasm").set_binary_path(path)
+      end
+
+      vim.keymap.set("n", "<leader>dai", disasm.toggle_inline_disasm, { desc = "Toggle disassembly" })
+      vim.keymap.set("n", "<leader>das", disasm.save_current_state, { desc = "Save current session state" })
+      vim.keymap.set("n", "<leader>dal", disasm.load_saved_state, { desc = "Load saved session" })
+      vim.keymap.set("n", "<leader>dar", disasm.remove_saved_state, { desc = "Remove saved session" })
+      vim.keymap.set("n", "<leader>dac", disasm.resolve_calls_under_the_cursor, { desc = "Jump to a call" })
+      vim.keymap.set("n", "<leader>daw", disasm.new_window_disasm, { desc = "Disassemble to new window" })
+      vim.keymap.set("n", "<leader>daq", disasm.stop, { desc = "Clean disassembly and quit GDB" })
     end,
   },
 

@@ -828,7 +828,7 @@ local plugins = {
 
       local target = cmake.get_build_target()
       if target then
-        local path = cmake.get_build_path(target) .. target
+        local path = cmake.get_build_target_path(target) .. target
         require("gdbdisasm").set_binary_path(path)
       end
 

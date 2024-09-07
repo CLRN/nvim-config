@@ -339,12 +339,14 @@ M.cmake_tools = {
     ["<leader>cts"] = { "<cmd> CMakeTargetSettings <CR>", "Set target settings" },
     ["<leader>ctb"] = {
       function()
-        require("cmake-tools").select_build_target(function()
+        local cmake = require "cmake-tools"
+        cmake.select_build_target(function()
           vim.cmd "redrawstatus"
 
-          local target = require("cmake-tools").get_build_target()
-          local path = require("cmake-tools").get_build_path(target) .. target
-          require("gdbdisasm").set_binary_path(path)
+          local target = cmake.get_build_target()
+          if target then
+            require("gdbdisasm").set_binary_path(cmake.get_build_target_path(target))
+          end
         end)
       end,
       "Select build target",

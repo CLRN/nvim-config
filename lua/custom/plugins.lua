@@ -828,8 +828,7 @@ local plugins = {
 
       local target = cmake.get_build_target()
       if target then
-        local path = cmake.get_build_target_path(target) .. target
-        require("gdbdisasm").set_binary_path(path)
+        disasm.set_binary_path(cmake.get_build_target_path(target))
       end
 
       vim.keymap.set("n", "<leader>dai", disasm.toggle_inline_disasm, { desc = "Toggle disassembly" })

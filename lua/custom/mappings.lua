@@ -253,7 +253,7 @@ M.general = {
     ["<leader>gl"] = { "<cmd> LazyGit <CR>" },
 
     -- misc
-    ["<leader>pf"] = { "<cmd> lua print(vim.fn.expand('%')) <CR>" },
+    ["<leader>pf"] = { "<cmd> lua print(vim.fn.expand('%:p')) <CR>" },
 
     ["<leader>ne"] = { "<cmd> NoiceErrors <CR>", "NoiceErrors" },
     ["<leader>nh"] = { "<cmd> NoiceHistory <CR>", "NoiceHistory" },

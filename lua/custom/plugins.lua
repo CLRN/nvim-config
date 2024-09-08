@@ -554,38 +554,6 @@ local plugins = {
   },
 
   {
-    "nvim-neorg/neorg",
-    event = "VeryLazy",
-    build = ":Neorg sync-parsers",
-    commit = "28cbafb",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    config = function()
-      vim.filetype.add {
-        pattern = {
-          [".*%.norg.*"] = "norg",
-        },
-      }
-      require("neorg").setup {
-        load = {
-          ["core.defaults"] = {},
-          ["core.concealer"] = {},
-          ["core.esupports.indent"] = {},
-          ["core.itero"] = {},
-          ["core.keybinds"] = {},
-          ["core.dirman"] = {
-            config = {
-              workspaces = {
-                work = "~/work/docs/notes",
-                home = "~/home/docs/notes",
-              },
-            },
-          },
-        },
-      }
-    end,
-  },
-
-  {
     "anuvyklack/hydra.nvim",
     event = "VeryLazy",
     config = function()

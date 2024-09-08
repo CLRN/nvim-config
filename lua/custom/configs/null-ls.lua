@@ -8,7 +8,7 @@ local opts = {
     null_ls.builtins.diagnostics.ruff,
     null_ls.builtins.formatting.prettier.with { filetypes = { "markdown", "css" } },
     -- null_ls.builtins.formatting.clang_format,
-    null_ls.builtins.formatting.stylua,
+    null_ls.builtins.formatting.stylua.with { extra_args = { "--indent_type", "Spaces", "indent_width", "2" } },
     null_ls.builtins.formatting.beautysh,
     null_ls.builtins.formatting.djhtml.with { filetypes = { "html", "htmldjango" } },
 
@@ -41,7 +41,7 @@ local bde_formatter = {
   method = { null_ls.methods.FORMATTING, null_ls.methods.RANGE_FORMATTING },
   filetypes = { "cpp" },
   generator = null_ls.formatter {
-    command = vim.fn.executable("bde-format-15") == 1 and "bde-format-15" or "clang-format",
+    command = vim.fn.executable "bde-format-15" == 1 and "bde-format-15" or "clang-format",
     to_stdin = true,
     args = require("null-ls.helpers").range_formatting_args_factory(
       { "--assume-filename", "$FILENAME" },

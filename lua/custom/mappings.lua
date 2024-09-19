@@ -25,10 +25,10 @@ M.general = {
     ["<A-t>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>:tabnext<CR>", true, true, true), "Escape and go to tab" },
 
     -- switch between windows
-    ["<C-j>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>h", true, true, true), "Escape and go to window" },
-    ["<C-'>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>l", true, true, true), "Escape and go to window" },
-    ["<C-k>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>j", true, true, true), "Escape and go to window" },
-    ["<C-l>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>k", true, true, true), "Escape and go to window" },
+    ["<C-Left>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>h", true, true, true), "Escape and go to window" },
+    ["<C-Right>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>l", true, true, true), "Escape and go to window" },
+    ["<C-Down>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>j", true, true, true), "Escape and go to window" },
+    ["<C-Up>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N><C-w>k", true, true, true), "Escape and go to window" },
 
     -- back
     ["<C-o>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N><C-o>", true, true, true), "Escape and go back" },

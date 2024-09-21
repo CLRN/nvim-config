@@ -273,9 +273,6 @@ local plugins = {
         stopOnEntry = false,
         runInTerminal = true,
         console = "integratedTerminal",
-        -- custom = true,
-        -- targetCreateCommands = { "gdb-remote localhost:1234", "target create /Users/skarnaukhov/home/git/jupyter.nvim/cmake-build/Debug/test" },
-        -- processCreateCommands = { },
       }
 
       local is_bb = vim.fn.executable "/opt/bb/bin/g++" == 1

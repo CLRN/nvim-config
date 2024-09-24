@@ -176,6 +176,9 @@ M.general = {
     ["<leader>sj"] = { "<cmd> Telescope jumplist <CR>" },
     ["<leader>ss"] = { "<cmd> Telescope lsp_workspace_symbols <CR>" },
     ["<leader>sd"] = { "<cmd> Telescope diagnostics <CR>" },
+    ["<leader>si"] = { function ()
+      vim.cmd(string.format("source %s", vim.fn.expand('~/init.lua')))
+    end, "Load source init file from home dir"},
 
     ["<A-x>"] = {
       function()

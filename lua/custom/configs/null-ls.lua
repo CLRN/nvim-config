@@ -1,15 +1,17 @@
 local null_ls = require "null-ls"
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+local ruff_diagnostics = require "none-ls.diagnostics.ruff"
+local beautysh_formatting = require "none-ls.formatting.beautysh"
 
 local opts = {
   sources = {
     null_ls.builtins.diagnostics.mypy,
-    null_ls.builtins.diagnostics.ruff,
+    ruff_diagnostics,
     null_ls.builtins.formatting.prettier.with { filetypes = { "markdown", "css" } },
     -- null_ls.builtins.formatting.clang_format,
     null_ls.builtins.formatting.stylua.with { extra_args = { "--indent_type", "Spaces", "indent_width", "2" } },
-    null_ls.builtins.formatting.beautysh,
+    beautysh_formatting,
     null_ls.builtins.formatting.djhtml.with { filetypes = { "html", "htmldjango" } },
 
     -- python

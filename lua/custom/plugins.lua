@@ -6,7 +6,8 @@ local plugins = {
   -- Override plugin definition options
   {
     event = "VeryLazy",
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
+    dependencies = { "nvimtools/none-ls-extras.nvim" },
     opts = function()
       return require "custom.configs.null-ls"
     end,
@@ -550,70 +551,70 @@ local plugins = {
     },
   },
 
-  {
-    "anuvyklack/hydra.nvim",
-    event = "VeryLazy",
-    config = function()
-      local Hydra = require "hydra"
-
-      local function cmd(command)
-        return table.concat { ":", command, "<cr>" }
-      end
-
-      local hint = [[
- Move      Size          Splits
- ----- --------------  -----------
- ^ ^ _l_ ^ ^   ^ ^  _<Up>_ ^ ^     _s_: horizontally
- _j_ ^ ^ _'_ _<Left>_ _<Right>_  _v_: vertically
- ^ ^ _k_ ^ ^   ^ ^ _<Down>_ ^ ^    _c_: close
-
- _=_: equalize           _m_: toggle maximize
- _r_: Rotate down/right  _R_: rotate up/left
- ^
- _q_:     exit          _<Esc>_: exit
-]]
-
-      local opts = { exit = true, nowait = true }
-
-      Hydra {
-        name = "Windows",
-        hint = hint,
-        config = {
-          color = "pink",
-          invoke_on_body = true,
-          hint = {
-            position = "middle",
-            border = "rounded",
-          },
-        },
-        mode = "n",
-        body = "<leader>ww",
-        heads = {
-          { "s", cmd "split", opts },
-          { "v", cmd "vsplit", opts },
-          { "c", cmd "close", opts }, -- close current window
-          { "m", cmd "WindowsMaximize", opts }, -- maximize current window
-          -- window resizing
-          { "=", cmd "wincmd =" },
-          { "<Up>", cmd "wincmd +" },
-          { "<Down>", cmd "wincmd -" },
-          { "<Left>", cmd "wincmd <" },
-          { "<Right>", cmd "wincmd >" },
-          -- move window around
-          { "j", cmd "wincmd H" },
-          { "k", cmd "wincmd J" },
-          { "l", cmd "wincmd K" },
-          { "'", cmd "wincmd L" },
-          -- rotate window
-          { "r", cmd "wincmd r" },
-          { "R", cmd "wincmd R" },
-          -- quit
-          { "q", nil, opts },
-          { "<Esc>", nil, opts },
-        },
-      }
-    end,
-  },
+--   {
+--     "anuvyklack/hydra.nvim",
+--     event = "VeryLazy",
+--     config = function()
+--       local Hydra = require "hydra"
+--
+--       local function cmd(command)
+--         return table.concat { ":", command, "<cr>" }
+--       end
+--
+--       local hint = [[
+--  Move      Size          Splits
+--  ----- --------------  -----------
+--  ^ ^ _l_ ^ ^   ^ ^  _<Up>_ ^ ^     _s_: horizontally
+--  _j_ ^ ^ _'_ _<Left>_ _<Right>_  _v_: vertically
+--  ^ ^ _k_ ^ ^   ^ ^ _<Down>_ ^ ^    _c_: close
+--
+--  _=_: equalize           _m_: toggle maximize
+--  _r_: Rotate down/right  _R_: rotate up/left
+--  ^
+--  _q_:     exit          _<Esc>_: exit
+-- ]]
+--
+--       local opts = { exit = true, nowait = true }
+--
+--       Hydra {
+--         name = "Windows",
+--         hint = hint,
+--         config = {
+--           color = "pink",
+--           invoke_on_body = true,
+--           hint = {
+--             position = "middle",
+--             border = "rounded",
+--           },
+--         },
+--         mode = "n",
+--         body = "<leader>ww",
+--         heads = {
+--           { "s", cmd "split", opts },
+--           { "v", cmd "vsplit", opts },
+--           { "c", cmd "close", opts }, -- close current window
+--           { "m", cmd "WindowsMaximize", opts }, -- maximize current window
+--           -- window resizing
+--           { "=", cmd "wincmd =" },
+--           { "<Up>", cmd "wincmd +" },
+--           { "<Down>", cmd "wincmd -" },
+--           { "<Left>", cmd "wincmd <" },
+--           { "<Right>", cmd "wincmd >" },
+--           -- move window around
+--           { "j", cmd "wincmd H" },
+--           { "k", cmd "wincmd J" },
+--           { "l", cmd "wincmd K" },
+--           { "'", cmd "wincmd L" },
+--           -- rotate window
+--           { "r", cmd "wincmd r" },
+--           { "R", cmd "wincmd R" },
+--           -- quit
+--           { "q", nil, opts },
+--           { "<Esc>", nil, opts },
+--         },
+--       }
+--     end,
+--   },
 
   {
     "kawre/leetcode.nvim",

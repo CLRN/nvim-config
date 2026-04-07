@@ -330,7 +330,6 @@ M.cmake_tools = {
     ["<leader>cb"] = {
       function()
         require("cmake-tools").build({}, function()
-          require("gdbdisasm").update_asm_display()
         end)
       end,
       "Build target",
@@ -345,11 +344,6 @@ M.cmake_tools = {
         local cmake = require "cmake-tools"
         cmake.select_build_target(function()
           vim.cmd "redrawstatus"
-
-          local target = cmake.get_build_target()
-          if target then
-            require("gdbdisasm").set_binary_path(cmake.get_build_target_path(target))
-          end
         end)
       end,
       "Select build target",

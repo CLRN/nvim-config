@@ -43,8 +43,9 @@ M.ui = {
           7,
           (function()
             if cmake and cmake.is_cmake_project() then
-              local build = "⚒[" .. (cmake.get_build_type() or "") .. ":" .. (cmake.get_build_target() or "") .. "] "
-              local launch = "▶[" .. (cmake.get_launch_target() or "") .. "] "
+              local function s(v) return type(v) == "string" and v or (v and (v)[1] or "") end
+              local build = "⚒[" .. s(cmake.get_build_type()) .. ":" .. s(cmake.get_build_target()) .. "] "
+              local launch = "▶[" .. s(cmake.get_launch_target()) .. "] "
               return "%#St_LspStatus# " .. build .. launch
             end
             return ""

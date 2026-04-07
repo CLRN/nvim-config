@@ -232,42 +232,13 @@ local plugins = {
       return vim.fn.filewritable "CMakeLists.txt" == 1
     end,
     config = function(_, opts)
-      local gen_opts_bb = {
-        "-DCMAKE_EXPORT_COMPILE_COMMANDS=1",
-        "-DCMAKE_VERBOSE_MAKEFILE=OFF",
-        "-DCMAKE_TOOLCHAIN_FILE="
-          .. (os.getenv "DISTRIBUTION_REFROOT" or "")
-          .. "/opt/bb/share/plink/BBToolchain64.cmake",
-        "-DCMAKE_INSTALL_LIBDIR=.",
-        "-DBUILDID=dev",
-        "-DCMAKE_OUTPUT_DIR=.",
-        "-GUnix Makefiles",
-      }
-
       local gen_opts_clang = {
         "-DCMAKE_EXPORT_COMPILE_COMMANDS=1",
         "-DCMAKE_C_COMPILER=clang",
         "-DCMAKE_CXX_COMPILER=clang++",
-        "-GNinja",
       }
 
-      local dap_gdb = {
-        name = "cpp",
-        type = "cppdbg",
-        request = "launch",
-        stopOnEntry = false,
-        runInTerminal = true,
-        console = "integratedTerminal",
-        setupCommands = {
-          {
-            text = "-enable-pretty-printing",
-            description = "enable pretty printing",
-            ignoreFailures = false,
-          },
-        },
-      }
-
-      local dap_lldb = {
+      local dap = {
         name = "cpp",
         type = "codelldb",
         request = "launch",
@@ -276,27 +247,13 @@ local plugins = {
         console = "integratedTerminal",
       }
 
-      local is_bb = vim.fn.executable "/opt/bb/bin/g++" == 1
-      local dap = dap_lldb
-      if is_bb then
-        if #vim.fn.system "ps a -q 1 | grep rosetta" > 0 then
-          dap_gdb.type = "cppdbg_rosetta"
-          table.insert(dap_gdb.setupCommands, {
-            text = "handle SIGSEGV nostop noprint",
-            description = "ignore SIGSEGV caused by Rosetta",
-            ignoreFailures = false,
-          })
-        end
-        dap = dap_gdb
-      end
-
       require("cmake-tools").setup {
         cmake_command = "cmake", -- this is used to specify cmake command path
         cmake_regenerate_on_save = true, -- auto generate when save CMakeLists.txt
         --
-        cmake_generate_options = is_bb and gen_opts_bb or gen_opts_clang, -- this will be passed when invoke `CMakeGenerate`
+        cmake_generate_options = gen_opts_clang, -- this will be passed when invoke `CMakeGenerate`
         cmake_build_options = { "-j", "12" }, -- this will be passed when invoke `CMakeBuild`
-        cmake_build_directory = "cmake-build/${variant:buildType}", -- this is used to specify generate directory for cmake, allows macro expansion
+        cmake_build_directory = "build/${variant:buildType}", -- this is used to specify generate directory for cmake, allows macro expansion
         cmake_soft_link_compile_commands = false, -- this will automatically make a soft link from compile commands file to project root dir
         cmake_compile_commands_from_lsp = true,
         cmake_kits_path = nil, -- this is used to specify global cmake kits path, see CMakeKits for detailed usage

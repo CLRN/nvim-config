@@ -327,35 +327,14 @@ M.dap_python = {
 M.cmake_tools = {
   plugin = false,
   n = {
-    ["<leader>cb"] = {
-      function()
-        require("cmake-tools").build({}, function()
-        end)
-      end,
-      "Build target",
-    },
+    ["<leader>cb"] = { "<cmd> CMakeBuild <CR>", "Build current target" },
     ["<leader>cd"] = { "<cmd> CMakeDebug <CR>", "Debug current target" },
     ["<leader>cr"] = { "<cmd> CMakeRun <CR>", "Run current target" },
     ["<leader>cc"] = { "<cmd> CMakeRunTest <CR>", "Run ctest" },
     ["<leader>cs"] = { "<cmd> CMakeStopExecutor <CR>", "Stop build" },
     ["<leader>cts"] = { "<cmd> CMakeTargetSettings <CR>", "Set target settings" },
-    ["<leader>ctb"] = {
-      function()
-        local cmake = require "cmake-tools"
-        cmake.select_build_target(function()
-          vim.cmd "redrawstatus"
-        end)
-      end,
-      "Select build target",
-    },
-    ["<leader>ctr"] = {
-      function()
-        require("cmake-tools").select_launch_target(function()
-          vim.cmd "redrawstatus"
-        end)
-      end,
-      "Select launch target",
-    },
+    ["<leader>ctb"] = { "<cmd> CMakeSelectBuildTarget <CR>", "CMakeSelectBuildTarget" },
+    ["<leader>ctr"] = { "<cmd> CMakeSelectLaunchTarget <CR>", "CMakeSelectLaunchTarget " },
     ["<leader>cpb"] = { "<cmd> CMakeSelectBuildType <CR>", "Select build type" },
   },
 }
